@@ -1,13 +1,15 @@
-Zvolili jsme si platfromu github.com pro správu verzíí.
-https://github.com/DanValnicek/ivs-cal-sklamanie123
-Přístup byl mimo jiné udělen účtu ivskontrola na githubu.
+Verzovací nástroj
+  Zvolili jsme si platfromu github.com pro správu verzíí.
+  https://github.com/DanValnicek/ivs-cal-sklamanie123
+  Přístup byl mimo jiné udělen účtu ivskontrola na githubu.
 
 Komunikační kanály
-  Discord
-  Github
-  Domácí Samba server
-  Face to face
+  - Discord
+  - Github
+  - Domácí Samba server
+  - Face to face
   
+Plán projektu
 1. Vytvoření repozitáře a spřístupnění vyučujícim - 15.3.
 2. Produkt - 25.4.
   - mockup programu (Lukáš Katona, Martin Brázda) - 25.3.
