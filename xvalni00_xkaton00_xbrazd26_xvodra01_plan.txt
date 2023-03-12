@@ -1,0 +1,46 @@
+Zvolili jsme si platfromu github.com pro správu verzíí.
+https://github.com/DanValnicek/ivs-cal-sklamanie123
+Přístup byl mimo jiné udělen účtu ivskontrola na githubu.
+
+Komunikační kanály
+  Discord
+  Github
+  Domácí Samba server
+  Face to face
+  
+1. Vytvoření repozitáře a spřístupnění vyučujícim - 15.3.
+2. Produkt - 25.4.
+  - mockup programu (Lukáš Katona, Martin Brázda) - 25.3.
+  
+  - testy (Dan Valníček, Jakub Vodrážka) - 25.3.
+    - základní aritmetické operace (Dan Valníček)
+    - faktoriál (Jakub Vodrážka)
+    - umocnění (Dan Valníček)
+    - odmocnění (Jakub Vodrážka)
+    - vybraná funkce Suma (Dan Valníček)
+    
+  - matematická knihovna (Dan Valníček, Lukáš Katona) - 9.4.
+    - základní aritmetické operace (Lukáš Katona)
+    - faktoriál (Dan Valníček)
+    - umocnění (Lukáš Katona)
+    - odmocnění (Dan Valníček)
+    - vybraná funkce Suma (Lukáš Katona)
+  
+  - program - 16.4.
+    - back-end
+      - electron (Martin Brázda)
+    - front-end (Jakub Vodrážka, Martin Brázda)
+      
+  - Makefile (Dan Valníček) - 23.4.
+  - instalátor (Martin Brázda) - 23.4.
+  - odinstalátor (Martin Brázda) - 23.4.
+  - dokumentace (Všichni) - 25.4.
+ 
+3. Debugging (Všichni)
+4. Profiling (Dan Valníček) - 23.4.
+5. Mockup další verze (Lukáš Katona) - 23.4.
+6. Vyhodnocení rozdílů medzi plánem a skutečností (Všichni) - 25.4.
+7. Prezentace (Lukáš Katona) - 9.5.
+8. problemy.txt - 9.5.
+
+  
