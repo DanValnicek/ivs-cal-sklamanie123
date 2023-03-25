@@ -1,0 +1,78 @@
+import { nthRootOfNumber } from '../nthroot';
+describe('test nth root function', () => {
+  it('should return 3', () => {
+    expect(nthRootOfNumber(9, 2)).toBe(3);
+  });
+  it('should return 2', () => {
+    expect(nthRootOfNumber(8, 3)).toBe(2);
+  });
+
+  it('should return given number', () => {
+    expect(nthRootOfNumber(9, 1)).toBe(9);
+  });
+  it('should return given number', () => {
+    expect(nthRootOfNumber(8, 1)).toBe(8);
+  });
+
+  it('should return given numbers mirror value', () => {
+    expect(nthRootOfNumber(4, -1)).toBe(0.25);
+  });
+  it('should return given numbers mirror value', () => {
+    expect(nthRootOfNumber(1000, -1)).toBe(0.001);
+  });
+
+  //when the number the user wants to root is 0
+  it('root -0.1 of 0', () => {
+    expect(nthRootOfNumber(0, -0.1)).toBe(undefined);
+  });
+  it('root 0 of 0', () => {
+    expect(nthRootOfNumber(0, 0)).toBe(0);
+  });
+  it('root 0.1 of 0', () => {
+    expect(nthRootOfNumber(0, 0.1)).toBe(0);
+  });
+  it('root -1 of 0', () => {
+    expect(nthRootOfNumber(0, -1)).toBe(undefined);
+  });
+  it('root 1 of 0', () => {
+    expect(nthRootOfNumber(0, 1)).toBe(0);
+  });
+
+  // when the number by whitch the user wants to root is 0
+  it('root 0 of 1', () => {
+    expect(nthRootOfNumber(1, 0)).toBe(undefined);
+  });
+  it('root 0 of 0.9', () => {
+    expect(nthRootOfNumber(0.9, 0)).toBe(0);
+  });
+  it('root 0 of 0.1', () => {
+    expect(nthRootOfNumber(0.1, 0)).toBe(0);
+  });
+  it('root 0 of 0', () => {
+    expect(nthRootOfNumber(0, 0)).toBe(0);
+  });
+
+  // when the number by which the user wants to root is negative
+  it('root -3 of 8', () => {
+    expect(nthRootOfNumber(8, -3)).toBe(0.5);
+  });
+  it('root -1.5 of 8', () => {
+    expect(nthRootOfNumber(8, -1.5)).toBe(0.25);
+  });
+
+  // when the number by which the user wants to root is from interval (0,1)
+  it('root 0.3 of 8', () => {
+    expect(nthRootOfNumber(8, 0.3)).toBe(1024);
+  });
+  it('root 0.5 of 8', () => {
+    expect(nthRootOfNumber(8, 0.5)).toBe(64);
+  });
+
+  // when the number by which the user wants to root is from interval (-1,0)
+  it('root -0.6 of 8', () => {
+    expect(nthRootOfNumber(8, -0.6)).toBe(0.03125);
+  });
+  it('root -0.5 of 4', () => {
+    expect(nthRootOfNumber(4, -0.5)).toBe(0.0625);
+  });
+});
