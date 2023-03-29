@@ -4,12 +4,15 @@
       <titlebar />
 
       <div class="content">
-        <code>TODO: app content goes here</code>
+        <code>
+                    <!-- TODO: app content goes here -->
+                    <ScreenVue />
+                  </code>
         <br />
-        <code
-          >Devtools note (important): Press F12 to launch devtools, and separate them into a
-          window</code
-        >
+        <code>
+                    Devtools note (important): Press F12 to launch devtools, and separate them into a
+                          window
+                  </code>
       </div>
     </div>
   </div>
@@ -21,11 +24,13 @@ import { defineComponent } from 'vue'
 import { argbFromHex, hexFromArgb, themeFromSourceColor } from '@material/material-color-utilities'
 
 import Titlebar from './components/shell/Titlebar.vue'
+import ScreenVue from './components/gui/Screen.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
-    Titlebar
+    Titlebar,
+    ScreenVue
   },
   created() {
     const theme = themeFromSourceColor(argbFromHex('#a09bff'), [])
@@ -67,6 +72,7 @@ export default defineComponent({
 .outer {
   padding: 0 57px; // sinusova veta and stuff a/sin(A)-c/sin(C)
 }
+
 .inner {
   transform: skew(-8deg);
   pointer-events: all;
