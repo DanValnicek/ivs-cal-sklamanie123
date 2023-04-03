@@ -15,12 +15,6 @@ export default defineComponent({
   components: {
     PromptVue,
     ResultVue
-  },
-  data() {
-    return {
-      a: 20,
-      b: 40
-    };
   }
 })
 </script>

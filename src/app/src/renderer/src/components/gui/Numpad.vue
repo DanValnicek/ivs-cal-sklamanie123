@@ -16,29 +16,29 @@ export default defineComponent({
   data() {
     return {
       buttonsData: [
-        { value: 1, color: 'l-1', area: 'abs', icon: 'abs' },
-        { value: 2, color: 'l-1', area: 'fac', icon: 'fact' },
+        { area: 'abs', icon: 'abs' },
+        { area: 'fac', icon: 'fact' },
         { value: 7, color: 'l-2', area: 'n7' },
         { value: 4, color: 'l-2', area: 'n4' },
         { value: 1, color: 'l-2', area: 'n1' },
-        { value: 6, color: 'l-2', area: 'pm', icon: 'pm' },
-        { value: 7, color: 'l-1', area: 'clr', icon: 'del' },
-        { value: 8, color: 'l-1', area: 'root', icon: 'root' },
+        { color: 'l-2', area: 'pm', icon: 'pm' },
+        { area: 'clr', icon: 'del' },
+        { area: 'root', icon: 'root' },
         { value: 8, color: 'l-2', area: 'n8' },
         { value: 5, color: 'l-2', area: 'n5' },
         { value: 2, color: 'l-2', area: 'n2' },
         { value: 0, color: 'l-2', area: 'n0' },
-        { value: 13, color: 'l-1', area: 'bs', icon: 'back' },
-        { value: 14, color: 'l-1', area: 'pow', icon: 'pow' },
+        { area: 'bs', icon: 'back' },
+        { area: 'pow', icon: 'pow' },
         { value: 9, color: 'l-2', area: 'n9' },
         { value: 6, color: 'l-2', area: 'n6' },
         { value: 3, color: 'l-2', area: 'n3' },
         { value: '.', color: 'l-2', area: 'dot' },
-        { value: 19, color: 'l-1', area: 'div', icon: 'div' },
-        { value: 20, color: 'l-1', area: 'mul', icon: 'mult' },
-        { value: 21, color: 'l-1', area: 'min', icon: 'minus' },
-        { value: 22, color: 'l-1', area: 'plus', icon: 'plus' },
-        { value: 23, color: 'l-accent', area: 'eq', icon: 'eq' }
+        { area: 'div', icon: 'div' },
+        { area: 'mul', icon: 'mult' },
+        { area: 'min', icon: 'minus' },
+        { area: 'plus', icon: 'plus' },
+        { color: 'l-accent', area: 'eq', icon: 'eq' }
       ]
     }
   }
@@ -60,9 +60,5 @@ export default defineComponent({
     'n4 n5 n6 plus'
     'n1 n2 n3 eq'
     'pm n0 dot eq';
-
-  .numpad-button-col {
-    height: 100%;
-  }
 }
 </style>

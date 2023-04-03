@@ -17,7 +17,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .prompt-container {
   display: flex;
-  justify-content: start;
 
   .prompt-text {
     display: block;

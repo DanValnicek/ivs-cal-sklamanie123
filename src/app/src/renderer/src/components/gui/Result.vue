@@ -17,7 +17,8 @@ export default defineComponent({
 <style scoped lang="scss">
 .result-container {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
+
   .result-text {
     display: block;
     transform: skewX(8deg);
