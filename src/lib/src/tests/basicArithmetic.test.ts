@@ -14,7 +14,7 @@ describe('test substract function', () => {
     it('should return 300', () => expect(basicArithmetic.substract(100, -200)).toBe(300));
     it('should return 0.5', () => expect(basicArithmetic.substract(1,0.5)).toBe(0.5));
     it('should return 32.2', () => expect(basicArithmetic.substract(12.8,-19.4)).toBe(32.2));
-    it('should return 0', () => expect(basicArithmetic.substract(-1.435,1.435)).toBe(0));
+    it('should return 0', () => expect(basicArithmetic.substract(-1.435,1.435)).toBe(-2.87));
 });
 describe('test multiply function', () => {
     it('should return 50', () => expect(basicArithmetic.multiply(5, 10)).toBe(50));
