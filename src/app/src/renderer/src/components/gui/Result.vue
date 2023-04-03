@@ -22,8 +22,8 @@ export default defineComponent({
     display: block;
     transform: skewX(8deg);
     padding: 8px;
-    font-size: 2rem;
-    font-weight: 600;
+    font-size: 2.5rem;
+    font-weight: 500;
   }
 }
 </style>

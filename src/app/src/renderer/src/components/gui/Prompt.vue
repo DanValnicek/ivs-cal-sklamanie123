@@ -23,7 +23,7 @@ export default defineComponent({
     display: block;
     transform: skewX(8deg);
     padding: 8px;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
   }
 }
 </style>
