@@ -47,7 +47,6 @@ export default defineComponent({
   border: none;
   background: transparent;
   border-radius: 4px;
-  margin: 3px;
   color: #fff;
 
   .button-text {
