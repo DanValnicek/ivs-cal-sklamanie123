@@ -60,5 +60,7 @@ export default defineComponent({
     'n4 n5 n6 plus'
     'n1 n2 n3 eq'
     'pm n0 dot eq';
+  gap: 8px;
+  padding: 12px;
 }
 </style>
