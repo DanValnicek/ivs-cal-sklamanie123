@@ -3,7 +3,7 @@
         const result = (x + y).toFixed(9);
         return parseFloat(result);
     }
-    export function substract(x: number, y: number): number{
+    export function subtract(x: number, y: number): number{
         const result = (x - y).toFixed(9);
         return parseFloat(result);
     }
