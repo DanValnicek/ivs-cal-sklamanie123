@@ -2,14 +2,9 @@
   <div id="ncte" ref="outer" class="outer">
     <div class="inner">
       <titlebar />
-
       <div class="content">
-        <code>TODO: app content goes here</code>
-        <br />
-        <code
-          >Devtools note (important): Press F12 to launch devtools, and separate them into a
-          window</code
-        >
+        <ScreenVue/>
+        <NumpadVue/>
       </div>
     </div>
   </div>
@@ -21,11 +16,15 @@ import { defineComponent } from 'vue'
 import { argbFromHex, hexFromArgb, themeFromSourceColor } from '@material/material-color-utilities'
 
 import Titlebar from './components/shell/Titlebar.vue'
+import ScreenVue from './components/gui/Screen.vue'
+import NumpadVue from './components/gui/Numpad.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
-    Titlebar
+    Titlebar,
+    ScreenVue,
+    NumpadVue
   },
   created() {
     const theme = themeFromSourceColor(argbFromHex('#a09bff'), [])
@@ -38,6 +37,8 @@ export default defineComponent({
 
       'c-surface': theme.schemes.dark.surface,
       'c-on-surface': theme.schemes.dark.onSurface,
+
+      'c-surface-variant': theme.schemes.dark.surfaceVariant,
 
       'c-error': theme.schemes.dark.error,
       'c-error-container': theme.schemes.dark.errorContainer,
@@ -67,6 +68,7 @@ export default defineComponent({
 .outer {
   padding: 0 57px; // sinusova veta and stuff a/sin(A)-c/sin(C)
 }
+
 .inner {
   transform: skew(-8deg);
   pointer-events: all;
@@ -80,7 +82,9 @@ export default defineComponent({
 
 .content {
   background: var(--c-surface);
-  height: calc(100% - 31px);
+  height: calc(100% - 39px);
   border-radius: 6px;
+  display: flex;
+  flex-direction: column;
 }
 </style>
