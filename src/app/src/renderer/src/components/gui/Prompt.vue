@@ -1,7 +1,7 @@
 <template>
   <div class="prompt-container">
     <div class="prompt-text single-line" contenteditable="true">
-      {{ current }}
+      {{ promptValue }}
     </div>
   </div>
 </template>
@@ -12,24 +12,10 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'Prompt',
   props: {
-    userInput: {
+    promptValue: {
       type: String
     }
   },
-  data() {
-    return {
-      current: '',
-    }
-  },
-  watch: {
-    userInput(newVal, oldVal) {
-      this.current = `${this.current}${newVal}`;
-      console.log(this.current);
-
-    }
-  },
-  methods: {
-  }
 })
 </script>
 

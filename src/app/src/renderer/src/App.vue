@@ -3,7 +3,7 @@
     <div class="inner">
       <titlebar />
       <div class="content">
-        <ScreenVue :userInput="userInput" />
+        <ScreenVue :promptValue="promptValue" />
         <NumpadVue @user-input="getUserInput" />
       </div>
     </div>
@@ -28,7 +28,8 @@ export default defineComponent({
   },
   data() {
     return {
-      userInput: ''
+      userInput: '',
+      promptValue: '',
     }
   },
   created() {
@@ -69,6 +70,24 @@ export default defineComponent({
   methods: {
     getUserInput(value: string) {
       this.userInput = value;
+
+      if (this.userInput === '.') {
+        this.promptValue += `${this.userInput}`;
+        return;
+      }
+      if (this.userInput === 'clr') {
+        this.promptValue = '';
+        return;
+      }
+      if (this.userInput === 'bs') {
+        this.promptValue.slice(0, -1);
+        return;
+      }
+      if (!isNaN(Number(this.userInput))) {
+        this.promptValue += `${this.userInput}`;
+      } else {
+        this.promptValue += ` ${this.userInput} `;
+      }
     }
   }
 })

@@ -42,7 +42,7 @@ export default defineComponent({
   },
   methods: {
     emitUserInput() {
-      this.$emit('user-input', this.value);
+      this.$emit('user-input', this.value); //this needs to be unique for every button clicked even when it is the same button pressed twice
     }
   }
 });
