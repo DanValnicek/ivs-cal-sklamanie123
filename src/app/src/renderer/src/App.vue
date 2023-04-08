@@ -3,8 +3,8 @@
     <div class="inner">
       <titlebar />
       <div class="content">
-        <ScreenVue/>
-        <NumpadVue/>
+        <ScreenVue :userInput="userInput" />
+        <NumpadVue @user-input="getUserInput" />
       </div>
     </div>
   </div>
@@ -25,6 +25,11 @@ export default defineComponent({
     Titlebar,
     ScreenVue,
     NumpadVue
+  },
+  data() {
+    return {
+      userInput: ''
+    }
   },
   created() {
     const theme = themeFromSourceColor(argbFromHex('#a09bff'), [])
@@ -59,6 +64,11 @@ export default defineComponent({
 
     for (const varName of Object.keys(cols)) {
       document.documentElement.style.setProperty('--' + varName, hexFromArgb(cols[varName]))
+    }
+  },
+  methods: {
+    getUserInput(value: string) {
+      this.userInput = value;
     }
   }
 })

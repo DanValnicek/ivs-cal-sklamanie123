@@ -1,7 +1,7 @@
 <template>
   <div class="prompt-container">
-    <div class="prompt-text">
-      20*sqrt(40)
+    <div class="prompt-text single-line" contenteditable="true">
+      {{ current }}
     </div>
   </div>
 </template>
@@ -10,7 +10,26 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'Prompt'
+  name: 'Prompt',
+  props: {
+    userInput: {
+      type: String
+    }
+  },
+  data() {
+    return {
+      current: '',
+    }
+  },
+  watch: {
+    userInput(newVal, oldVal) {
+      this.current = `${this.current}${newVal}`;
+      console.log(this.current);
+
+    }
+  },
+  methods: {
+  }
 })
 </script>
 
@@ -21,8 +40,23 @@ export default defineComponent({
   .prompt-text {
     display: block;
     transform: skewX(8deg);
-    padding: 8px;
-    font-size: 1.5rem;
+    font-size: 20px;
+    padding: 0px 12px;
+  }
+
+  [contenteditable="true"].single-line {
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  [contenteditable="true"].single-line br {
+    display: none;
+  }
+
+  [contenteditable="true"].single-line * {
+    display: inline;
+    white-space: nowrap;
   }
 }
 </style>

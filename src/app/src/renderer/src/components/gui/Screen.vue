@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PromptVue />
+    <PromptVue :userInput="userInput" />
     <ResultVue />
   </div>
 </template>
@@ -15,7 +15,12 @@ export default defineComponent({
   components: {
     PromptVue,
     ResultVue
-  }
+  },
+  props: {
+    userInput: {
+      type: String
+    }
+  },
 })
 </script>
 

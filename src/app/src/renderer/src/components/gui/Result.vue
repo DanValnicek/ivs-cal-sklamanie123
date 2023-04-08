@@ -1,7 +1,7 @@
 <template>
   <div class="result-container">
     <div class="result-text">
-      800
+      {{ result || 0 }}
     </div>
   </div>
 </template>
@@ -10,7 +10,12 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'Result'
+  name: 'Result',
+  data() {
+    return {
+      result: null
+    }
+  }
 })
 </script>
 
@@ -18,12 +23,13 @@ export default defineComponent({
 .result-container {
   display: flex;
   justify-content: flex-end;
+  padding: 0px 12px;
 
   .result-text {
     display: block;
     transform: skewX(8deg);
     padding: 8px;
-    font-size: 2.5rem;
+    font-size: 32px;
     font-weight: 500;
   }
 }
