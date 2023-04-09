@@ -1,5 +1,3 @@
-// @ts-ignore
-import {Queue, Stack} from 'ts-structures';
 import {convertRPN, parseExpression} from '../parser'
 
 describe('test parseRPN function', () => {
@@ -34,12 +32,10 @@ describe('test parse expression function', () => {
         expect(parseExpression("2 + 3")).toBe(5);
     })
     it("3 + 4 × 2 ÷ ( 1 − 5 ) ^ 2 ^ 3 => 3,00012207", () => {
-        expect(parseExpression("3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3")).toEqual(
-            3.00012207);
+        expect(parseExpression("3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3")).toEqual(3.00012207);
     })
-    it("sum 0 4 ( 5 + n )  => 0 4 5 + sum", () => {
-        expect(parseExpression("sum 0 4 ( 5 + n )")).toEqual(
-            [0, 4, 5, "n", "+", "sum"]);
+    it("sum 0 4 ( 5 + n )  => 35", () => {
+        expect(parseExpression("sum 0 4 ( 5 + n )")).toEqual(35);
     })
     it("4 + 2 ^ 3 ^ 2 => 516", () => {
         expect(parseExpression("4 + 2 ^ 3 ^ 2")).toEqual(516)
@@ -53,8 +49,8 @@ describe('test parse expression function', () => {
     it("sum 0 5 ( 6 + 3 * sum 0 4 ( 3 - 4 + n ) / n ) => undefined", () => {
         expect(parseExpression("sum 0 5 ( 6 + 3 * sum 0 4 ( 3 - 4 + n ) / n )")).toEqual(undefined)
     })
-    it("root 2 ( 5 - root 2 4 ) => 2 5 2 4 root - root", () => {
-        expect(parseExpression("root 2 ( 5 - root 2 4 )")).toEqual([2, 5, 2, 4, "root", "-", "root"])
+    it("root 2 ( 5 - root 2 4 ) => 1.732050808", () => {
+        expect(parseExpression("root 2 ( 5 - root 2 4 )")).toEqual(1.732050808)
     })
     // it("5 4 + 6", () => expect(parseExpression("5 4 + 6")).toThrow())
 })
