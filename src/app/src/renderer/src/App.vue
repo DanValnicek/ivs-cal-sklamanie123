@@ -3,7 +3,7 @@
     <div class="inner">
       <titlebar />
       <div class="content">
-        <ScreenVue :promptValue="promptValue" />
+        <ScreenVue :promptValue="promptValue" @cursor-info="handleCursorInfo" @update-prompt-value="updatePromptValue" />
         <NumpadVue @user-input="handleUserInput" />
       </div>
     </div>
@@ -30,6 +30,8 @@ export default defineComponent({
     return {
       userInput: '',
       promptValue: '',
+      currentCursorPosition: 0,
+      currentCursorSelection: ''
     }
   },
   created() {
@@ -68,6 +70,11 @@ export default defineComponent({
     }
   },
   methods: {
+    handleCursorInfo(currentCursorPosition, currentCursorSelection) { // update cursor info on change
+      this.currentCursorPosition = currentCursorPosition;
+      this.currentCursorSelection = currentCursorSelection;
+    },
+
     handleUserInput(value: string) {
       this.userInput = value;
 
@@ -99,6 +106,11 @@ export default defineComponent({
       } else {
         this.promptValue += ` ${this.userInput} `;
       }
+    },
+    updatePromptValue(newPromptValue) {
+      this.promptValue = newPromptValue;
+      console.log(this.promptValue);
+
     },
     calculateExpression() {
       console.log(this.promptValue);

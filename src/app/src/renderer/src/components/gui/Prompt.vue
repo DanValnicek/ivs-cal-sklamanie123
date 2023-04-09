@@ -1,6 +1,6 @@
 <template>
   <div class="prompt-container">
-    <div ref="prompt" class="prompt-text single-line" contenteditable="true" @blur="handleBlur">
+    <div ref="prompt" class="prompt-text" contenteditable="true" @blur="handleBlur" @input="updatePromptValue">
       {{ promptValue }}
     </div>
   </div>
@@ -16,6 +16,7 @@ export default defineComponent({
       type: String
     }
   },
+  emits: ['cursor-info', 'update-prompt-value'],
   data() {
     return {
       currentCursorPosition: 0,
@@ -25,7 +26,6 @@ export default defineComponent({
   mounted() {
     this.handleBlur();
     this.getCursorInfo();
-
   },
   methods: {
     getCursorInfo() {
@@ -40,11 +40,20 @@ export default defineComponent({
 
         this.currentCursorPosition = position || 0;
         this.currentCursorSelection = selection?.toString() || '';
+        this.storeCursorInfo();
       });
     },
-    handleBlur() { // auto focus prompt div for input
+    handleBlur() { // auto focus prompt div for input and store new promptValue in state
       const prompt = this.$refs.prompt as HTMLDivElement;
       this.$nextTick(() => prompt.focus());
+      // emit promptValue here
+    },
+    storeCursorInfo() {
+      this.$emit('cursor-info', this.currentCursorPosition, this.currentCursorSelection);
+    },
+    updatePromptValue(event) {
+      const newPromptValue = event.target.textContent;
+      this.$emit('update-prompt-value', newPromptValue);
     }
   }
 });
