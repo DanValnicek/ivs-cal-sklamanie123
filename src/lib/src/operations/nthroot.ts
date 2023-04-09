@@ -1,4 +1,4 @@
-export function nThRoot(x: number, n: number): number | undefined {
+export function nThRoot(n: number, x: number): number | undefined {
     /*
      y = n root x
      y^n = x
