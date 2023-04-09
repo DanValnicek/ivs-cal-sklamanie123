@@ -1,6 +1,6 @@
 <template>
   <div class="prompt-container">
-    <div class="prompt-text single-line" contenteditable="true">
+    <div ref="prompt" class="prompt-text single-line" contenteditable="true" @blur="handleBlur">
       {{ promptValue }}
     </div>
   </div>
@@ -16,7 +16,38 @@ export default defineComponent({
       type: String
     }
   },
-})
+  data() {
+    return {
+      currentCursorPosition: 0,
+      currentCursorSelection: ''
+    };
+  },
+  mounted() {
+    this.handleBlur();
+    this.getCursorInfo();
+
+  },
+  methods: {
+    getCursorInfo() {
+      const prompt = this.$refs.prompt as HTMLDivElement;
+      prompt.addEventListener('mouseup', () => {
+        const selection = window.getSelection();
+        const range = selection?.getRangeAt(0);
+        const position = range?.startOffset;
+
+        console.log(`Cursor position is: ${position}`);
+        console.log(`Selected text is: ${selection?.toString()}`);
+
+        this.currentCursorPosition = position || 0;
+        this.currentCursorSelection = selection?.toString() || '';
+      });
+    },
+    handleBlur() { // auto focus prompt div for input
+      const prompt = this.$refs.prompt as HTMLDivElement;
+      this.$nextTick(() => prompt.focus());
+    }
+  }
+});
 </script>
 
 <style lang="scss" scoped>
@@ -28,21 +59,7 @@ export default defineComponent({
     transform: skewX(8deg);
     font-size: 20px;
     padding: 0px 12px;
-  }
-
-  [contenteditable="true"].single-line {
-    white-space: nowrap;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  [contenteditable="true"].single-line br {
-    display: none;
-  }
-
-  [contenteditable="true"].single-line * {
-    display: inline;
-    white-space: nowrap;
+    outline: none;
   }
 }
 </style>

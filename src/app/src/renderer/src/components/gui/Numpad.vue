@@ -39,7 +39,7 @@ export default defineComponent({
         { value: '* ', area: 'mul', icon: 'mul' },
         { value: '- ', area: 'min', icon: 'min' },
         { value: '+ ', area: 'plus', icon: 'plus' },
-        { color: 'l-accent', area: 'eq', icon: 'eq' } //add event listener for ENTER
+        { value: 'eq', color: 'l-accent', area: 'eq', icon: 'eq' } //add event listener for ENTER
       ]
     }
   },

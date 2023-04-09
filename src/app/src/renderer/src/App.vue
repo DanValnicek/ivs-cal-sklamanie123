@@ -4,7 +4,7 @@
       <titlebar />
       <div class="content">
         <ScreenVue :promptValue="promptValue" />
-        <NumpadVue @user-input="getUserInput" />
+        <NumpadVue @user-input="handleUserInput" />
       </div>
     </div>
   </div>
@@ -68,26 +68,40 @@ export default defineComponent({
     }
   },
   methods: {
-    getUserInput(value: string) {
+    handleUserInput(value: string) {
       this.userInput = value;
 
-      if (this.userInput === '.') {
-        this.promptValue += `${this.userInput}`;
+      if (this.userInput === "eq") {
+        this.calculateExpression();
         return;
       }
+
       if (this.userInput === 'clr') {
         this.promptValue = '';
         return;
       }
-      if (this.userInput === 'bs') {
-        this.promptValue.slice(0, -1);
+
+      if (this.userInput === '.') {
+        // implement checking that number has only one dot
+        this.promptValue += `${this.userInput}`;
         return;
       }
+
+      if (this.userInput === 'bs') {
+        // implement the functionality of deleting the last number or in the case of function to delete the function symbol and the whitespaces around it
+        this.promptValue = this.promptValue.substring(0, this.promptValue.length - 1); //.slice(0, -1) does not work for some reason
+        console.log(this.promptValue);
+        return;
+      }
+
       if (!isNaN(Number(this.userInput))) {
         this.promptValue += `${this.userInput}`;
       } else {
         this.promptValue += ` ${this.userInput} `;
       }
+    },
+    calculateExpression() {
+      console.log(this.promptValue);
     }
   }
 })
