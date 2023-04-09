@@ -7,6 +7,8 @@ export interface IMathLib {
 
     divide(x: number, y: number): number | undefined;
 
+    absolute(x: number): number;
+
     factorial(x: number, y: number): number | undefined;
 
     powerOfN(x: number, n: number): number | undefined;

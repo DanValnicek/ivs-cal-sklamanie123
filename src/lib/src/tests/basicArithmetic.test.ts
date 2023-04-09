@@ -30,4 +30,11 @@ describe('test divide function',() => {
     it('should return -0.5', () => expect(basicArithmetic.divide(100, -200)).toBe(-0.5));
     it('should return 2', () => expect(basicArithmetic.divide(1,0.5)).toBe(2));
     it('should return undefined',  expect(basicArithmetic.divide(-1.435,0)).toBeUndefined);
+});
+describe('test absolute value function',() => {
+    it('should return 5', () => expect(basicArithmetic.absolute(5)).toBe(5));
+    it('should return 5', () => expect(basicArithmetic.absolute(-5)).toBe(5));
+    it('should return 0', () => expect(basicArithmetic.absolute(0)).toBe(0));
+    it('should return 0.5', () => expect(basicArithmetic.absolute(-0.5)).toBe(0.5));
+    it('should return 1.424242424', () => expect(basicArithmetic.absolute(-1.4242424242424242)).toBe(1.424242424));
 })
