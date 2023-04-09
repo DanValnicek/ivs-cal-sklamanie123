@@ -59,8 +59,7 @@ export function convertRPN(expression: string): Array<number | string> {
     let currentToken: string;
     while (input.length) {
         if (input[0] === undefined) throw Error("Undefined symbol");
-        // @ts-ignore
-        currentToken = input.shift();
+        currentToken = input.shift() || "";
         if (!isNaN(Number(currentToken)))
             output.push(Number(currentToken));
             // else if (currentToken === "n")
@@ -68,8 +67,7 @@ export function convertRPN(expression: string): Array<number | string> {
         else if (functionTable[currentToken])
             operatorStack.push(currentToken);
         else if (currentToken.startsWith("$"))
-            //deletes "$ "
-            output.push(currentToken.substring(2));
+            output.push(currentToken.replace("$ ",""));
         else if (operatorTable[currentToken]) {
             while (
                 // @ts-ignore
@@ -111,7 +109,7 @@ export function convertRPN(expression: string): Array<number | string> {
 
 export function parseExpression(expression: string): number | undefined {
     let termList = convertRPN(expression);
-    while (isNaN(Number(termList))) {
+    while (termList.length != 1 || typeof termList[0] != "number") {
         let term = termList.find(value => operatorTable[value] || functionTable[value]);
         if (term == undefined) throw Error("Parse error");
         let termIndex = termList.indexOf(term);
@@ -126,6 +124,5 @@ export function parseExpression(expression: string): number | undefined {
         if (result == undefined) return undefined;
         termList.splice(termIndex - argCount, argCount + 1, result);
     }
-    // @ts-ignore
-    return termList;
+    return termList[0];
 }
