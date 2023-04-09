@@ -1,4 +1,4 @@
-import { nThRoot } from '../nthroot';
+import { nThRoot } from '../operations/nthroot';
 describe('test nth root function', () => {
   it('should return 3', () => {
     expect(nThRoot(9, 2)).toBe(3);
