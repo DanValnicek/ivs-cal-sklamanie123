@@ -3,8 +3,12 @@
     <div class="inner">
       <titlebar />
       <div class="content">
-        <ScreenVue :promptValue="promptValue" :cursor-index="selectionStart" @cursor-info="handleCursorInfo"
-          @update-prompt-value="updatePromptValue" />
+        <ScreenVue
+          :promptValue="promptValue"
+          :cursor-index="selectionStart"
+          @cursor-info="handleCursorInfo"
+          @update-prompt-value="updatePromptValue"
+        />
         <NumpadVue @user-input="handleUserInput" />
       </div>
     </div>
@@ -12,13 +16,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
-import { argbFromHex, hexFromArgb, themeFromSourceColor } from '@material/material-color-utilities'
+import { argbFromHex, hexFromArgb, themeFromSourceColor } from '@material/material-color-utilities';
 
-import Titlebar from './components/shell/Titlebar.vue'
-import ScreenVue from './components/gui/Screen.vue'
-import NumpadVue from './components/gui/Numpad.vue'
+import Titlebar from './components/shell/Titlebar.vue';
+import ScreenVue from './components/gui/Screen.vue';
+import NumpadVue from './components/gui/Numpad.vue';
 
 export default defineComponent({
   name: 'App',
@@ -29,18 +33,17 @@ export default defineComponent({
   },
   data() {
     return {
-      userInput: '',
       promptValue: '',
 
       selectionStart: 0,
       selectionEnd: 0,
       selectionContent: ''
-    }
+    };
   },
   created() {
-    const theme = themeFromSourceColor(argbFromHex('#a09bff'), [])
+    const theme = themeFromSourceColor(argbFromHex('#a09bff'), []);
 
-    console.log(theme.schemes.dark)
+    console.log(theme.schemes.dark);
 
     const cols = {
       'c-bg': theme.schemes.dark.background,
@@ -66,25 +69,24 @@ export default defineComponent({
 
       'c-secondary-container': theme.schemes.dark.secondaryContainer,
       'c-on-secondary-container': theme.schemes.dark.onSecondaryContainer
-    }
+    };
 
     for (const varName of Object.keys(cols)) {
-      document.documentElement.style.setProperty('--' + varName, hexFromArgb(cols[varName]))
+      document.documentElement.style.setProperty('--' + varName, hexFromArgb(cols[varName]));
     }
   },
   methods: {
-    handleCursorInfo(selectionStart: number, selectionEnd: number) { // update cursor info on change
+    handleCursorInfo(selectionStart: number, selectionEnd: number) {
+      // update cursor info on change
       this.selectionStart = selectionStart;
       this.selectionEnd = selectionEnd;
-      this.selectionContent = this.promptValue.substring(this.selectionStart, this.selectionEnd)
+      this.selectionContent = this.promptValue.substring(this.selectionStart, this.selectionEnd);
     },
 
-    handleUserInput(value: string) {
-      this.userInput = value;
+    handleUserInput(userInput: string) {
+      if (userInput === 'clr') this.promptValue = '';
 
-      if (this.userInput === 'clr') this.promptValue = '';
-
-      if (this.userInput === 'bs') {
+      if (userInput === 'bs') {
         if (this.selectionStart === 0) {
           return;
         } else {
@@ -104,7 +106,7 @@ export default defineComponent({
       console.log(this.promptValue);
     }
   }
-})
+});
 </script>
 
 <style lang="scss" scoped>
