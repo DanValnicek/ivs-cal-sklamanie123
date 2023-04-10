@@ -35,9 +35,11 @@ export default defineComponent({
     return {
       promptValue: '',
 
-      selectionStart: 0,
-      selectionEnd: 0,
-      selectionContent: ''
+      cursorInfo: {
+        selectionStart: 0,
+        selectionEnd: 0,
+        selectionContent: ''
+      }
     };
   },
   created() {
@@ -76,27 +78,25 @@ export default defineComponent({
     }
   },
   methods: {
-    handleCursorInfo(selectionStart: number, selectionEnd: number) {
+    handleCursorInfo(cursorInfo: object) {
       // update cursor info on change
-      this.selectionStart = selectionStart;
-      this.selectionEnd = selectionEnd;
-      this.selectionContent = this.promptValue.substring(this.selectionStart, this.selectionEnd);
+      this.cursorInfo.selectionStart = cursorInfo.selectionStart;
+      this.cursorInfo.selectionEnd = cursorInfo.selectionEnd;
+      this.cursorInfo.selectionContent = this.promptValue.substring(this.cursorInfo.selectionStart, this.cursorInfo.selectionEnd);
     },
 
     handleUserInput(userInput: string) {
       if (userInput === 'clr') this.promptValue = '';
 
       if (userInput === 'bs') {
-        if (this.selectionStart === 0) {
+        if (this.cursorInfo.selectionStart === 0) {
           return;
-        } else {
-          this.promptValue = this.promptValue.substring(0, this.selectionStart - 1) + this.promptValue.substring(this.selectionStart);
-          this.selectionStart--;
-          this.selectionEnd--;
-          // every char needs 2 clicks for some reason
-          // need to propagate the current cursor location to prompt component
-          // so it renders it accurately because now th cursor flies all over the place
         }
+        const strBeforeCursor = this.promptValue.substring(0, this.cursorInfo.selectionStart - 1);
+        const strAfterCursor = this.promptValue.substring(this.cursorInfo.selectionStart);
+        this.promptValue = strBeforeCursor + strAfterCursor;
+        this.cursorInfo.selectionStart--;
+        this.cursorInfo.selectionEnd--;
       }
     },
     updatePromptValue(newPromptValue: string) {
