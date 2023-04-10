@@ -3,6 +3,10 @@
     src: url("./assets/jbmono.ttf");
 }
 
+:root {
+    --t: 0.05s ease-out;
+}
+
 html {
     pointer-events: none;
 }

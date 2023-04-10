@@ -55,10 +55,10 @@ export default defineComponent({
   padding-bottom: 3px;
   position: relative;
   cursor: pointer;
-  transition: filter 0.1s ease-out;
+  transition: filter var(--t);
 
   .inner {
-    transition: transform 0.1s ease;
+    transition: transform var(--t);
   }
 
   &::before {
