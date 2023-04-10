@@ -1,6 +1,7 @@
 <template>
   <div>
-    <PromptVue :promptValue="promptValue" @cursor-info="getCursorInfo" @update-prompt-value="updatePromptValue" />
+    <PromptVue :promptValue="promptValue" :cursor-index="cursorIndex" @cursor-info="getCursorInfo"
+      @update-prompt-value="updatePromptValue" />
     <ResultVue />
   </div>
 </template>
@@ -19,13 +20,16 @@ export default defineComponent({
   props: {
     promptValue: {
       type: String
+    },
+    cursorIndex: {
+      type: Number
     }
   },
   emits: ['cursor-info', 'update-prompt-value'],
 
   methods: {
-    getCursorInfo(currentCursorPosition, currentCursorSelection) {
-      this.$emit('cursor-info', currentCursorPosition, currentCursorSelection);
+    getCursorInfo(selectionStart, selectionEnd) {
+      this.$emit('cursor-info', selectionStart, selectionEnd);
     },
     updatePromptValue(newPromptValue) {
       this.$emit('update-prompt-value', newPromptValue);

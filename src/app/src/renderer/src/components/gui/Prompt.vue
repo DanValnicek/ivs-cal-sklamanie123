@@ -1,8 +1,12 @@
 <template>
   <div class="prompt-container">
-    <div ref="prompt" class="prompt-text" contenteditable="true" @blur="handleBlur" @input="updatePromptValue">
+    <textarea rows="1" wrap="soft" overflow="hidden" ref="prompt" :value="promptValue" class="prompt-text"
+      @blur="handleBlur" @input="handleChangePromptValue"></textarea>
+
+
+    <!-- <div ref="prompt" class="prompt-text" contenteditable="true" @blur="handleBlur" @input="updatePromptValue">
       {{ promptValue }}
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -14,46 +18,54 @@ export default defineComponent({
   props: {
     promptValue: {
       type: String
+    },
+    cursorIndex: {
+      type: Number
     }
   },
   emits: ['cursor-info', 'update-prompt-value'],
   data() {
     return {
-      currentCursorPosition: 0,
-      currentCursorSelection: ''
+      lastCursorPosition: 0
     };
   },
+  watch: {
+    cursorIndex(newVal) {
+      this.lastCursorPosition = newVal;
+      this.handleBlur();
+    }
+  },
   mounted() {
-    this.handleBlur();
     this.getCursorInfo();
+    this.handleBlur();
   },
   methods: {
-    getCursorInfo() {
-      const prompt = this.$refs.prompt as HTMLDivElement;
-      prompt.addEventListener('mouseup', () => {
-        const selection = window.getSelection();
-        const range = selection?.getRangeAt(0);
-        const position = range?.startOffset;
-
-        console.log(`Cursor position is: ${position}`);
-        console.log(`Selected text is: ${selection?.toString()}`);
-
-        this.currentCursorPosition = position || 0;
-        this.currentCursorSelection = selection?.toString() || '';
-        this.storeCursorInfo();
+    handleBlur() {
+      const prompt = this.$refs.prompt as HTMLTextAreaElement;
+      this.$nextTick(() => {
+        prompt.focus();
+        prompt.setSelectionRange(this.lastCursorPosition, this.lastCursorPosition);
       });
     },
-    handleBlur() { // auto focus prompt div for input and store new promptValue in state
-      const prompt = this.$refs.prompt as HTMLDivElement;
-      this.$nextTick(() => prompt.focus());
-      // emit promptValue here
+
+    getCursorInfo() {
+      const prompt = this.$refs.prompt as HTMLTextAreaElement;
+      prompt.addEventListener('mouseup', () => {
+        const selectionStart = prompt.selectionStart;
+        const selectionEnd = prompt.selectionEnd;
+
+        this.lastCursorPosition = selectionStart;
+        this.$emit('cursor-info', selectionStart, selectionEnd);
+      })
     },
-    storeCursorInfo() {
-      this.$emit('cursor-info', this.currentCursorPosition, this.currentCursorSelection);
-    },
-    updatePromptValue(event) {
-      const newPromptValue = event.target.textContent;
-      this.$emit('update-prompt-value', newPromptValue);
+
+    handleChangePromptValue() {
+      const prompt = this.$refs.prompt as HTMLTextAreaElement;
+      const newPromptValue = prompt.value;
+
+      this.$emit('update-prompt-value', newPromptValue)
+
+
     }
   }
 });
@@ -66,9 +78,17 @@ export default defineComponent({
   .prompt-text {
     display: block;
     transform: skewX(8deg);
+
     font-size: 20px;
     padding: 0px 12px;
+
     outline: none;
+    border: none;
+    background-color: transparent;
+    resize: none;
+    outline: none;
+
+    color: white;
   }
 }
 </style>

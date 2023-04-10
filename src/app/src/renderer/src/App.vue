@@ -3,7 +3,8 @@
     <div class="inner">
       <titlebar />
       <div class="content">
-        <ScreenVue :promptValue="promptValue" @cursor-info="handleCursorInfo" @update-prompt-value="updatePromptValue" />
+        <ScreenVue :promptValue="promptValue" :cursor-index="selectionStart" @cursor-info="handleCursorInfo"
+          @update-prompt-value="updatePromptValue" />
         <NumpadVue @user-input="handleUserInput" />
       </div>
     </div>
@@ -30,8 +31,10 @@ export default defineComponent({
     return {
       userInput: '',
       promptValue: '',
-      currentCursorPosition: 0,
-      currentCursorSelection: ''
+
+      selectionStart: 0,
+      selectionEnd: 0,
+      selectionContent: ''
     }
   },
   created() {
@@ -70,47 +73,32 @@ export default defineComponent({
     }
   },
   methods: {
-    handleCursorInfo(currentCursorPosition, currentCursorSelection) { // update cursor info on change
-      this.currentCursorPosition = currentCursorPosition;
-      this.currentCursorSelection = currentCursorSelection;
+    handleCursorInfo(selectionStart: number, selectionEnd: number) { // update cursor info on change
+      this.selectionStart = selectionStart;
+      this.selectionEnd = selectionEnd;
+      this.selectionContent = this.promptValue.substring(this.selectionStart, this.selectionEnd)
     },
 
     handleUserInput(value: string) {
       this.userInput = value;
 
-      if (this.userInput === "eq") {
-        this.calculateExpression();
-        return;
-      }
-
-      if (this.userInput === 'clr') {
-        this.promptValue = '';
-        return;
-      }
-
-      if (this.userInput === '.') {
-        // implement checking that number has only one dot
-        this.promptValue += `${this.userInput}`;
-        return;
-      }
+      if (this.userInput === 'clr') this.promptValue = '';
 
       if (this.userInput === 'bs') {
-        // implement the functionality of deleting the last number or in the case of function to delete the function symbol and the whitespaces around it
-        this.promptValue = this.promptValue.substring(0, this.promptValue.length - 1); //.slice(0, -1) does not work for some reason
-        console.log(this.promptValue);
-        return;
-      }
-
-      if (!isNaN(Number(this.userInput))) {
-        this.promptValue += `${this.userInput}`;
-      } else {
-        this.promptValue += ` ${this.userInput} `;
+        if (this.selectionStart === 0) {
+          return;
+        } else {
+          this.promptValue = this.promptValue.substring(0, this.selectionStart - 1) + this.promptValue.substring(this.selectionStart);
+          this.selectionStart--;
+          this.selectionEnd--;
+          // every char needs 2 clicks for some reason
+          // need to propagate the current cursor location to prompt component
+          // so it renders it accurately because now th cursor flies all over the place
+        }
       }
     },
-    updatePromptValue(newPromptValue) {
+    updatePromptValue(newPromptValue: string) {
       this.promptValue = newPromptValue;
-      console.log(this.promptValue);
-
     },
     calculateExpression() {
       console.log(this.promptValue);
