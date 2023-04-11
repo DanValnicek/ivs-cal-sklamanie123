@@ -9,7 +9,7 @@ export interface IMathLib {
 
     absolute(x: number): number;
 
-    factorial(x: number, y: number): number | undefined;
+    factorial(x: number): number | undefined;
 
     powerOfN(x: number, n: number): number | undefined;
 
