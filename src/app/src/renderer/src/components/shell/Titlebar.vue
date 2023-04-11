@@ -5,6 +5,11 @@
       <div class="controls">
         <div class="control">
           <span class="inner">
+            <i class="ri-settings-4-line"></i>
+          </span>
+        </div>
+        <div class="control">
+          <span class="inner">
             <i class="ri-subtract-line"></i>
           </span>
         </div>

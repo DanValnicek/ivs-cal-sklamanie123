@@ -2,6 +2,7 @@
   <div id="ncte" ref="outer" class="outer">
     <div class="inner">
       <titlebar />
+      <Settings />
       <div class="content">
         <ScreenVue/>
         <NumpadVue/>
@@ -15,7 +16,8 @@ import { defineComponent } from 'vue'
 
 import { argbFromHex, hexFromArgb, themeFromSourceColor } from '@material/material-color-utilities'
 
-import Titlebar from './components/shell/Titlebar.vue'
+import Titlebar from './components/shell/Titlebar.vue';
+import Settings from './components/shell/Settings.vue';
 import ScreenVue from './components/gui/Screen.vue'
 import NumpadVue from './components/gui/Numpad.vue'
 
@@ -23,6 +25,7 @@ export default defineComponent({
   name: 'App',
   components: {
     Titlebar,
+    Settings,
     ScreenVue,
     NumpadVue
   },
