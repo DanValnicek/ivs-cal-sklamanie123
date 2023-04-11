@@ -13,7 +13,7 @@ export interface IMathLib {
 
     powerOfN(x: number, n: number): number | undefined;
 
-    nThRoot(x: number, n: number): number | undefined;
+    nThRoot(n: number, x: number): number | undefined;
 
     /**
      * Sum function denoted by capital sigma notation
