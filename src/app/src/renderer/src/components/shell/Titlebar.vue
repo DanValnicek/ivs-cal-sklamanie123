@@ -1,7 +1,7 @@
 <template>
   <div class="titlebar">
     <div class="content">
-      <div class="left">IVS Calc</div>
+      <div class="left">Calculator</div>
       <div class="controls">
         <div class="control" @click="onMinimizeClock">
           <span class="inner">
