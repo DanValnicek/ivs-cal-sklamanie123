@@ -3,7 +3,7 @@
     <div class="inner">
       <titlebar />
       <div class="content">
-        <ScreenVue :promptValue="promptValue" :cursorInfo="cursorInfo" @cursor-info="handleCursorInfo" @update-prompt-value="updatePromptValue" />
+        <ScreenVue :prompt-value="promptValue" :cursor-info="cursorInfo" @cursor-info="handleCursorInfo" @update-prompt-value="updatePromptValue" />
         <NumpadVue @user-input="handleUserInput" />
       </div>
     </div>
@@ -78,7 +78,6 @@ export default defineComponent({
       this.cursorInfo.selectionEnd = cursorInfo.selectionEnd;
       this.cursorInfo.selectionContent = this.promptValue.substring(this.cursorInfo.selectionStart, this.cursorInfo.selectionEnd);
     },
-
     handleUserInput(userInput: string) {
       if (userInput === 'clr') this.promptValue = '';
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PromptVue :promptValue="promptValue" :cursorInfo="cursorInfo" @cursor-info="getCursorInfo" @update-prompt-value="updatePromptValue" />
+    <PromptVue :prompt-value="promptValue" :cursor-info="cursorInfo" @cursor-info="getCursorInfo" @update-prompt-value="updatePromptValue" />
     <ResultVue />
   </div>
 </template>
