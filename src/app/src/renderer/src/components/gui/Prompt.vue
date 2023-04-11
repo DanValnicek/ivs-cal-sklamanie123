@@ -1,15 +1,7 @@
 <template>
   <div class="prompt-container">
-    <input
-      ref="prompt"
-      :value="promptValue"
-      class="prompt-text"
-      @blur="handleBlur"
-      @input="handleInput"
-      @focus="handleCursorInfo"
-      @click="handleCursorInfo"
-      @keydown="handleCursorInfo"
-    />
+    <input ref="prompt" :value="promptValue" class="prompt-text" @blur="handleBlur" @input="handleInput"
+      @focus="handleCursorInfo" @click="handleCursorInfo" @keydown="handleCursorInfo" />
   </div>
 </template>
 
@@ -26,7 +18,7 @@ export default defineComponent({
       type: Object
     }
   },
-  emits: ['cursor-info', 'update-prompt-value'],
+  emits: ['update:cursorInfo', 'update:promptValue'],
   data() {
     return {
       currentCursorPosition: 0
@@ -54,7 +46,7 @@ export default defineComponent({
     handleInput() {
       const prompt = this.$refs.prompt as HTMLTextAreaElement;
       const newPromptValue = prompt.value;
-      this.$emit('update-prompt-value', newPromptValue);
+      this.$emit('update:promptValue', newPromptValue);
     },
     focusPrompt() {
       const prompt = this.$refs.prompt as HTMLTextAreaElement;
@@ -71,7 +63,7 @@ export default defineComponent({
         selectionContent: this.promptValue?.substring(prompt.selectionStart, prompt.selectionEnd) || ''
       };
       this.currentCursorPosition = cursorInfo.selectionStart;
-      this.$emit('cursor-info', cursorInfo);
+      this.$emit('update:cursorInfo', cursorInfo);
     }
   }
 });

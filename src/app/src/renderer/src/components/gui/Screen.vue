@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PromptVue :prompt-value="promptValue" :cursor-info="cursorInfo" @cursor-info="getCursorInfo" @update-prompt-value="updatePromptValue" />
+    <PromptVue v-model:promptValue="pPromptValue" v-model:cursorInfo="pCursorInfo" />
     <ResultVue />
   </div>
 </template>
@@ -24,14 +24,25 @@ export default defineComponent({
       type: Object
     }
   },
-  emits: ['cursor-info', 'update-prompt-value'],
-
-  methods: {
-    getCursorInfo(cursorInfo: { selectionStart: number; selectionEnd: number; selectionContent: string }) {
-      this.$emit('cursor-info', cursorInfo);
+  emits: ['update:cursorInfo', 'update:promptValue'],
+  data() {
+    return {
+      pPromptValue: '',
+      pCursorInfo: {},
+    };
+  },
+  watch: {
+    promptValue(newVal) {
+      this.pPromptValue = newVal;
     },
-    updatePromptValue(newPromptValue: string) {
-      this.$emit('update-prompt-value', newPromptValue);
+    pPromptValue(newVal) {
+      this.$emit('update:promptValue', newVal);
+    },
+    cursorInfo(newVal) {
+      this.pCursorInfo = newVal;
+    },
+    pCursorInfo(newVal) {
+      this.$emit('update:cursorInfo', newVal);
     }
   }
 });

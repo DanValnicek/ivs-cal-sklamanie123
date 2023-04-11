@@ -3,7 +3,7 @@
     <div class="inner">
       <titlebar />
       <div class="content">
-        <ScreenVue :prompt-value="promptValue" :cursor-info="cursorInfo" @cursor-info="handleCursorInfo" @update-prompt-value="updatePromptValue" />
+        <ScreenVue v-model:promptValue="promptValue" v-model:cursorInfo="cursorInfo" />
         <NumpadVue @user-input="handleUserInput" />
       </div>
     </div>
