@@ -1,12 +1,6 @@
 <template>
   <div class="prompt-container">
-    <textarea rows="1" wrap="soft" overflow="hidden" ref="prompt" :value="promptValue" class="prompt-text"
-      @blur="handleBlur" @input="handleChangePromptValue"></textarea>
-
-
-    <!-- <div ref="prompt" class="prompt-text" contenteditable="true" @blur="handleBlur" @input="updatePromptValue">
-      {{ promptValue }}
-    </div> -->
+    <input ref="prompt" :value="promptValue" class="prompt-text" @blur="handleBlur" @input="handleChangePromptValue" />
   </div>
 </template>
 
@@ -19,20 +13,25 @@ export default defineComponent({
     promptValue: {
       type: String
     },
-    cursorIndex: {
-      type: Number
+    cursorInfo: {
+      type: Object
     }
   },
   emits: ['cursor-info', 'update-prompt-value'],
   data() {
     return {
-      lastCursorPosition: 0
+      currentCursorPosition: 0
     };
   },
   watch: {
-    cursorIndex(newVal) {
-      this.lastCursorPosition = newVal;
-      this.handleBlur();
+    cursorInfo: {
+      handler(newVal) {
+        console.log(newVal);
+
+        this.currentCursorPosition = newVal.selectionStart;
+        this.handleBlur();
+      },
+      deep: true
     }
   },
   mounted() {
@@ -44,28 +43,27 @@ export default defineComponent({
       const prompt = this.$refs.prompt as HTMLTextAreaElement;
       this.$nextTick(() => {
         prompt.focus();
-        prompt.setSelectionRange(this.lastCursorPosition, this.lastCursorPosition);
+        prompt.setSelectionRange(this.currentCursorPosition, this.currentCursorPosition);
       });
     },
 
     getCursorInfo() {
       const prompt = this.$refs.prompt as HTMLTextAreaElement;
       prompt.addEventListener('mouseup', () => {
-        const selectionStart = prompt.selectionStart;
-        const selectionEnd = prompt.selectionEnd;
-
-        this.lastCursorPosition = selectionStart;
-        this.$emit('cursor-info', selectionStart, selectionEnd);
-      })
+        const cursorInfo = {
+          selectionStart: prompt.selectionStart || 0,
+          selectionEnd: prompt.selectionEnd || 0,
+          selectionContent: this.promptValue?.substring(prompt.selectionStart, prompt.selectionEnd) || ''
+        };
+        this.currentCursorPosition = cursorInfo.selectionStart;
+        this.$emit('cursor-info', cursorInfo);
+      });
     },
 
     handleChangePromptValue() {
       const prompt = this.$refs.prompt as HTMLTextAreaElement;
       const newPromptValue = prompt.value;
-
-      this.$emit('update-prompt-value', newPromptValue)
-
-
+      this.$emit('update-prompt-value', newPromptValue);
     }
   }
 });
@@ -86,7 +84,7 @@ export default defineComponent({
     border: none;
     background-color: transparent;
     resize: none;
-    outline: none;
+    font-family: jb;
 
     color: white;
   }

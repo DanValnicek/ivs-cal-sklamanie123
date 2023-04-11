@@ -3,12 +3,7 @@
     <div class="inner">
       <titlebar />
       <div class="content">
-        <ScreenVue
-          :promptValue="promptValue"
-          :cursor-index="selectionStart"
-          @cursor-info="handleCursorInfo"
-          @update-prompt-value="updatePromptValue"
-        />
+        <ScreenVue :promptValue="promptValue" :cursorInfo="cursorInfo" @cursor-info="handleCursorInfo" @update-prompt-value="updatePromptValue" />
         <NumpadVue @user-input="handleUserInput" />
       </div>
     </div>
@@ -78,8 +73,7 @@ export default defineComponent({
     }
   },
   methods: {
-    handleCursorInfo(cursorInfo: object) {
-      // update cursor info on change
+    handleCursorInfo(cursorInfo: { selectionStart: number; selectionEnd: number; selectionContent: '' }) {
       this.cursorInfo.selectionStart = cursorInfo.selectionStart;
       this.cursorInfo.selectionEnd = cursorInfo.selectionEnd;
       this.cursorInfo.selectionContent = this.promptValue.substring(this.cursorInfo.selectionStart, this.cursorInfo.selectionEnd);
