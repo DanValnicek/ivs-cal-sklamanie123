@@ -1,6 +1,15 @@
 <template>
   <div class="prompt-container">
-    <input ref="prompt" :value="promptValue" class="prompt-text" @blur="handleBlur" @input="handleChangePromptValue" />
+    <input
+      ref="prompt"
+      :value="promptValue"
+      class="prompt-text"
+      @blur="handleBlur"
+      @input="handleInput"
+      @focus="handleCursorInfo"
+      @click="handleCursorInfo"
+      @keydown="handleCursorInfo"
+    />
   </div>
 </template>
 
@@ -26,44 +35,43 @@ export default defineComponent({
   watch: {
     cursorInfo: {
       handler(newVal) {
-        console.log(newVal);
-
         this.currentCursorPosition = newVal.selectionStart;
-        this.handleBlur();
+        this.focusPrompt();
       },
       deep: true
     }
   },
   mounted() {
-    this.getCursorInfo();
-    this.handleBlur();
+    this.focusPrompt();
   },
   methods: {
     handleBlur() {
+      this.focusPrompt();
+    },
+    handleCursorInfo() {
+      this.getCursorInfo();
+    },
+    handleInput() {
+      const prompt = this.$refs.prompt as HTMLTextAreaElement;
+      const newPromptValue = prompt.value;
+      this.$emit('update-prompt-value', newPromptValue);
+    },
+    focusPrompt() {
       const prompt = this.$refs.prompt as HTMLTextAreaElement;
       this.$nextTick(() => {
         prompt.focus();
         prompt.setSelectionRange(this.currentCursorPosition, this.currentCursorPosition);
       });
     },
-
     getCursorInfo() {
       const prompt = this.$refs.prompt as HTMLTextAreaElement;
-      prompt.addEventListener('mouseup', () => {
-        const cursorInfo = {
-          selectionStart: prompt.selectionStart || 0,
-          selectionEnd: prompt.selectionEnd || 0,
-          selectionContent: this.promptValue?.substring(prompt.selectionStart, prompt.selectionEnd) || ''
-        };
-        this.currentCursorPosition = cursorInfo.selectionStart;
-        this.$emit('cursor-info', cursorInfo);
-      });
-    },
-
-    handleChangePromptValue() {
-      const prompt = this.$refs.prompt as HTMLTextAreaElement;
-      const newPromptValue = prompt.value;
-      this.$emit('update-prompt-value', newPromptValue);
+      const cursorInfo = {
+        selectionStart: prompt.selectionStart || 0,
+        selectionEnd: prompt.selectionEnd || 0,
+        selectionContent: this.promptValue?.substring(prompt.selectionStart, prompt.selectionEnd) || ''
+      };
+      this.currentCursorPosition = cursorInfo.selectionStart;
+      this.$emit('cursor-info', cursorInfo);
     }
   }
 });
