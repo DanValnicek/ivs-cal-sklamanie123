@@ -1,8 +1,7 @@
 <template>
   <div class="prompt-container">
-    <div class="prompt-text">
-      20*sqrt(40)
-    </div>
+    <input ref="prompt" :value="promptValue" class="prompt-text" @blur="handleBlur" @input="handleInput"
+      @focus="handleCursorInfo" @click="handleCursorInfo" @keydown="handleCursorInfo" />
   </div>
 </template>
 
@@ -10,8 +9,64 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'Prompt'
-})
+  name: 'Prompt',
+  props: {
+    promptValue: {
+      type: String
+    },
+    cursorInfo: {
+      type: Object
+    }
+  },
+  emits: ['update:cursorInfo', 'update:promptValue'],
+  data() {
+    return {
+      currentCursorPosition: 0
+    };
+  },
+  watch: {
+    cursorInfo: {
+      handler(newVal) {
+        this.currentCursorPosition = newVal.selectionStart;
+        this.focusPrompt();
+      },
+      deep: true
+    }
+  },
+  mounted() {
+    this.focusPrompt();
+  },
+  methods: {
+    handleBlur() {
+      this.focusPrompt();
+    },
+    handleCursorInfo() {
+      this.getCursorInfo();
+    },
+    handleInput() {
+      const prompt = this.$refs.prompt as HTMLTextAreaElement;
+      const newPromptValue = prompt.value;
+      this.$emit('update:promptValue', newPromptValue);
+    },
+    focusPrompt() {
+      const prompt = this.$refs.prompt as HTMLTextAreaElement;
+      this.$nextTick(() => {
+        prompt.focus();
+        prompt.setSelectionRange(this.currentCursorPosition, this.currentCursorPosition);
+      });
+    },
+    getCursorInfo() {
+      const prompt = this.$refs.prompt as HTMLTextAreaElement;
+      const cursorInfo = {
+        selectionStart: prompt.selectionStart || 0,
+        selectionEnd: prompt.selectionEnd || 0,
+        selectionContent: this.promptValue?.substring(prompt.selectionStart, prompt.selectionEnd) || ''
+      };
+      this.currentCursorPosition = cursorInfo.selectionStart;
+      this.$emit('update:cursorInfo', cursorInfo);
+    }
+  }
+});
 </script>
 
 <style lang="scss" scoped>
@@ -21,8 +76,17 @@ export default defineComponent({
   .prompt-text {
     display: block;
     transform: skewX(8deg);
-    padding: 8px;
-    font-size: 1.5rem;
+
+    font-size: 20px;
+    padding: 0px 12px;
+
+    outline: none;
+    border: none;
+    background-color: transparent;
+    resize: none;
+    font-family: jb;
+
+    color: white;
   }
 }
 </style>

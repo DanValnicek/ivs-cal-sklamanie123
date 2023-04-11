@@ -3,21 +3,21 @@
     <div class="inner">
       <titlebar />
       <div class="content">
-        <ScreenVue/>
-        <NumpadVue/>
+        <ScreenVue v-model:promptValue="promptValue" v-model:cursorInfo="cursorInfo" />
+        <NumpadVue @user-input="handleUserInput" />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
-import { argbFromHex, hexFromArgb, themeFromSourceColor } from '@material/material-color-utilities'
+import { argbFromHex, hexFromArgb, themeFromSourceColor } from '@material/material-color-utilities';
 
-import Titlebar from './components/shell/Titlebar.vue'
-import ScreenVue from './components/gui/Screen.vue'
-import NumpadVue from './components/gui/Numpad.vue'
+import Titlebar from './components/shell/Titlebar.vue';
+import ScreenVue from './components/gui/Screen.vue';
+import NumpadVue from './components/gui/Numpad.vue';
 
 export default defineComponent({
   name: 'App',
@@ -26,10 +26,21 @@ export default defineComponent({
     ScreenVue,
     NumpadVue
   },
-  created() {
-    const theme = themeFromSourceColor(argbFromHex('#a09bff'), [])
+  data() {
+    return {
+      promptValue: '',
 
-    console.log(theme.schemes.dark)
+      cursorInfo: {
+        selectionStart: 0,
+        selectionEnd: 0,
+        selectionContent: ''
+      }
+    };
+  },
+  created() {
+    const theme = themeFromSourceColor(argbFromHex('#a09bff'), []);
+
+    console.log(theme.schemes.dark);
 
     const cols = {
       'c-bg': theme.schemes.dark.background,
@@ -55,13 +66,40 @@ export default defineComponent({
 
       'c-secondary-container': theme.schemes.dark.secondaryContainer,
       'c-on-secondary-container': theme.schemes.dark.onSecondaryContainer
-    }
+    };
 
     for (const varName of Object.keys(cols)) {
-      document.documentElement.style.setProperty('--' + varName, hexFromArgb(cols[varName]))
+      document.documentElement.style.setProperty('--' + varName, hexFromArgb(cols[varName]));
+    }
+  },
+  methods: {
+    handleCursorInfo(cursorInfo: { selectionStart: number; selectionEnd: number; selectionContent: '' }) {
+      this.cursorInfo.selectionStart = cursorInfo.selectionStart;
+      this.cursorInfo.selectionEnd = cursorInfo.selectionEnd;
+      this.cursorInfo.selectionContent = this.promptValue.substring(this.cursorInfo.selectionStart, this.cursorInfo.selectionEnd);
+    },
+    handleUserInput(userInput: string) {
+      if (userInput === 'clr') this.promptValue = '';
+
+      if (userInput === 'bs') {
+        if (this.cursorInfo.selectionStart === 0) {
+          return;
+        }
+        const strBeforeCursor = this.promptValue.substring(0, this.cursorInfo.selectionStart - 1);
+        const strAfterCursor = this.promptValue.substring(this.cursorInfo.selectionStart);
+        this.promptValue = strBeforeCursor + strAfterCursor;
+        this.cursorInfo.selectionStart--;
+        this.cursorInfo.selectionEnd--;
+      }
+    },
+    updatePromptValue(newPromptValue: string) {
+      this.promptValue = newPromptValue;
+    },
+    calculateExpression() {
+      console.log(this.promptValue);
     }
   }
-})
+});
 </script>
 
 <style lang="scss" scoped>
