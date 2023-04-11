@@ -24,7 +24,6 @@ describe('test parseRPN function', () => {
     it("root 2 ( 5 - root 2 4 ) => 2 5 2 4 root - root", () => {
         expect(convertRPN("root 2 ( 5 - root 2 4 )")).toEqual([2, 5, 2, 4, "root", "-", "root"])
     })
-    // it("5 4 + 6", () => expect(convertRPN("5 4 + 6")).toThrow())
 })
 
 describe('test parse expression function', () => {
@@ -52,5 +51,8 @@ describe('test parse expression function', () => {
     it("root 2 ( 5 - root 2 4 ) => 1.732050808", () => {
         expect(parseExpression("root 2 ( 5 - root 2 4 )")).toEqual(1.732050808)
     })
-    // it("5 4 + 6", () => expect(parseExpression("5 4 + 6")).toThrow())
+    it("5 4 + 6", () => {
+        expect(() => parseExpression("5 4 + 6")).toThrowError("Parse error")
+    })
+
 })

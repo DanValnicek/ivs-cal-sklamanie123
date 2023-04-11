@@ -26,7 +26,7 @@ const functionTable: Record<string, Function> = {
     'sum': sum,
 }
 
-function convertFunctionExpressionsToString(inputExpression: Array<string>): Array<string> {
+function convertFunctionExpressionsToString(inputExpression: string[]): string[] {
 
     let indexOfFunction = inputExpression.findIndex(value => functionTable[value]);
 
@@ -50,20 +50,18 @@ function convertFunctionExpressionsToString(inputExpression: Array<string>): Arr
 // shunting yard algorithm https://en.wikipedia.org/wiki/Shunting_yard_algorithm
 export function convertRPN(expression: string): Array<number | string> {
     if (expression.includes("$")) throw Error("Invalid character $")
-    let input: Array<string> = expression.split(" ");
+    let input: string[] = expression.split(" ");
     input = convertFunctionExpressionsToString(input);
 
     if (input == undefined) throw Error("Parsing error");
     let output: Array<number | string> = [];
-    let operatorStack: Array<string> = [];
+    let operatorStack: string[] = [];
     let currentToken: string;
     while (input.length) {
         if (input[0] === undefined) throw Error("Undefined symbol");
         currentToken = input.shift() || "";
         if (!isNaN(Number(currentToken)))
             output.push(Number(currentToken));
-            // else if (currentToken === "n")
-        //     output.push(currentToken);
         else if (functionTable[currentToken])
             operatorStack.push(currentToken);
         else if (currentToken.startsWith("$"))
