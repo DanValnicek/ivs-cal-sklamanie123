@@ -3,10 +3,12 @@
     'l-2': color == 'l-2',
     'l-accent': color == 'l-accent'
   }" :style="{ 'grid-area': area }">
-    <span v-if="icon" class="button-text">
-      <img :src="imageSrc" />
-    </span>
-    <span v-else class="button-text">{{ value }}</span>
+    <div class="inner">
+      <span v-if="icon" class="button-text">
+        <img :src="imageSrc" />
+      </span>
+      <span v-else class="button-text">{{ value }}</span>
+    </div>
   </button>
 </template>
 
@@ -50,10 +52,57 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .button {
+  --btn-bg: #272329;
   border: none;
-  background: transparent;
   border-radius: 4px;
+  background: linear-gradient(to bottom, var(--btn-bg), black 150%);
   color: #fff;
+  padding: 1px;
+  padding-bottom: 3px;
+  position: relative;
+  cursor: pointer;
+  transition: filter var(--t);
+
+  .inner {
+    transition: transform var(--t);
+  }
+
+  &::before {
+    border-radius: 4px;
+    content: '';
+    background: var(--btn-bg);
+    top: 1px;
+    left: 1px;
+    bottom: 2px;
+    right: 1px;
+    position: absolute;
+    z-index: 0;
+
+    transition: bottom 0.1s ease-out;
+  }
+
+  &:hover {
+    filter: brightness(125%);
+
+    &::before {
+      bottom: 4px;
+    }
+
+    .inner {
+      transform: translateY(-2px);
+    }
+  }
+
+  &:active {
+    filter: brightness(90%);
+
+    &::before {
+      bottom: 1px;
+    }
+    .inner {
+      transform: translateY(1px);
+    }
+  }
 
   .button-text {
     display: block;
@@ -63,14 +112,12 @@ export default defineComponent({
     font-weight: 500;
   }
 
-  background-color: #272329;
-
   &.l-2 {
-    background-color: #322C37;
+    --btn-bg: #322C37;
   }
 
   &.l-accent {
-    background-color: #D6BAFF;
+    --btn-bg: #D6BAFF;
   }
 }
 </style>

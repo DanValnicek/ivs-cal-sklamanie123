@@ -68,5 +68,6 @@ export default defineComponent({
     'pm n0 dot eq';
   gap: 8px;
   padding: 12px;
+  padding-top: 0;
 }
 </style>
