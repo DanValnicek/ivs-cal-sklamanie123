@@ -1,14 +1,14 @@
-import {add, divide, multiply, subtract} from "./operations/basicArithmetic";
-import {powerOfN} from "./operations/powerOfN";
-import {sum} from "./operations/sum";
-import {nThRoot} from "./operations/nthroot";
+import {absolute, add, divide, multiply, subtract} from './operations/basicArithmetic';
+import {powerOfN} from './operations/powerOfN';
+import {sum} from './operations/sum';
+import {nThRoot} from './operations/nthroot';
+import {factorial} from "./operations/factorial";
 
 interface Operator {
     precedence: number;
     associativity: 'left' | 'right';
     func: Function;
 }
-
 
 const operatorTable: Record<string, Operator> = {
     '+': {precedence: 2, associativity: 'left', func: add},
@@ -19,12 +19,14 @@ const operatorTable: Record<string, Operator> = {
     '/': {precedence: 3, associativity: 'left', func: divide},
     '÷': {precedence: 3, associativity: 'left', func: divide},
     '^': {precedence: 4, associativity: 'right', func: powerOfN},
-    'root': {precedence: 4, associativity: 'right', func: nThRoot},
+    "root": {precedence: 4, associativity: 'right', func: nThRoot},
+    "fact": {precedence: 4, associativity: 'right', func: factorial},
+    "abs": {precedence: 4, associativity: 'right', func: absolute},
 };
 
 const functionTable: Record<string, Function> = {
-    'sum': sum,
-}
+    sum: sum,
+};
 
 function convertFunctionExpressionsToString(inputExpression: string[]): string[] {
 
@@ -49,7 +51,8 @@ function convertFunctionExpressionsToString(inputExpression: string[]): string[]
 
 // shunting yard algorithm https://en.wikipedia.org/wiki/Shunting_yard_algorithm
 export function convertRPN(expression: string): Array<number | string> {
-    if (expression.includes("$")) throw Error("Invalid character $")
+    expression = sanitizeInput(expression);
+    if (expression.includes("$")) throw Error("Invalid character $");
     let input: string[] = expression.split(" ");
     input = convertFunctionExpressionsToString(input);
 
@@ -163,4 +166,4 @@ export function sanitizeInput(input: string): string {
     input = input.replace(regex, ' ');
 
     return input;
-  }
+}

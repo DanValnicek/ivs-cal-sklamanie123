@@ -29,18 +29,23 @@ describe('test parseRPN function', () => {
 describe('test parse expression function', () => {
     it("2 + 3 => 5", () => {
         expect(parseExpression("2 + 3")).toBe(5);
+        expect(parseExpression("2+3")).toBe(5);
     })
     it("3 + 4 × 2 ÷ ( 1 − 5 ) ^ 2 ^ 3 => 3,00012207", () => {
         expect(parseExpression("3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3")).toEqual(3.00012207);
+        expect(parseExpression("3+4*2/(1-5)^2^3")).toEqual(3.00012207);
     })
     it("sum 0 4 ( 5 + n )  => 35", () => {
         expect(parseExpression("sum 0 4 ( 5 + n )")).toEqual(35);
     })
     it("4 + 2 ^ 3 ^ 2 => 516", () => {
         expect(parseExpression("4 + 2 ^ 3 ^ 2")).toEqual(516)
+        expect(parseExpression("4+2^3^2")).toEqual(516)
+        expect(parseExpression("4+2  ^3 ^    2")).toEqual(516)
     })
     it("4 + 2 ^ 3 + 3 ^ ( 2 - 4 ) => 12,111111111", () => {
         expect(parseExpression("4 + 2 ^ 3 + 3 ^ ( 2 - 4 )")).toEqual(12.111111111)
+        expect(parseExpression("4+2 ^3 +3^ (2 -4 )")).toEqual(12.111111111)
     })
     it("2 + 3 * 6 - sum 0 5 ( 5 + n - 3 * n ) + 2 => 22", () => {
         expect(parseExpression("2 + 3 * 6 - sum 0 5 ( 5 + n - 3 * n ) + 2")).toEqual(22)
@@ -50,9 +55,19 @@ describe('test parse expression function', () => {
     })
     it("root 2 ( 5 - root 2 4 ) => 1.732050808", () => {
         expect(parseExpression("root 2 ( 5 - root 2 4 )")).toEqual(1.732050808)
+        expect(parseExpression("root 2 (5- root 2 4 )")).toEqual(1.732050808)
     })
     it("5 4 + 6", () => {
         expect(() => parseExpression("5 4 + 6")).toThrowError("Parse error")
+        expect(() => parseExpression("5 4+6")).toThrowError("Parse error")
+    })
+    it("fact ( 5 ) => 120", () => {
+        expect(parseExpression("fact ( 5 )")).toEqual(120)
+        expect(parseExpression("fact (5)")).toEqual(120)
+    })
+    it("fact ( 5 ) - root 3 ( 8 ) + abs(-6)^2 => 154", () => {
+        expect(parseExpression("fact ( 5 ) - root 3 ( 8 ) + abs ( -6 ) ^ 2")).toEqual(154)
+        expect(parseExpression("fact(5 )- root3(8 ) +|-6|^2")).toEqual(154)
     })
 
 })
