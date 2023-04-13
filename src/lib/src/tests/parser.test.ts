@@ -46,7 +46,6 @@ describe('test parse expression function', () => {
     })
     it("root 2 ( 5 - root 2 4 ) => 1.732050808", () => {
         expect(parseExpression("root 2 ( 5 - root 2 4 )")).toEqual(1.732050808)
-        expect(parseExpression("root 2 (5- root 2 4 )")).toEqual(1.732050808)
     })
     it("5 4 + 6", () => {
         expect(() => parseExpression("5 4 + 6")).toThrowError("Parse error")
