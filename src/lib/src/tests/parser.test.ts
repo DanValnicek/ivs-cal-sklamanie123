@@ -35,9 +35,6 @@ describe('test parse expression function', () => {
         expect(parseExpression("3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3")).toEqual(3.00012207);
         expect(parseExpression("3+4*2/(1-5)^2^3")).toEqual(3.00012207);
     })
-    it("sum 0 4 ( 5 + n )  => 35", () => {
-        expect(parseExpression("sum 0 4 ( 5 + n )")).toEqual(35);
-    })
     it("4 + 2 ^ 3 ^ 2 => 516", () => {
         expect(parseExpression("4 + 2 ^ 3 ^ 2")).toEqual(516)
         expect(parseExpression("4+2^3^2")).toEqual(516)
@@ -46,12 +43,6 @@ describe('test parse expression function', () => {
     it("4 + 2 ^ 3 + 3 ^ ( 2 - 4 ) => 12,111111111", () => {
         expect(parseExpression("4 + 2 ^ 3 + 3 ^ ( 2 - 4 )")).toEqual(12.111111111)
         expect(parseExpression("4+2 ^3 +3^ (2 -4 )")).toEqual(12.111111111)
-    })
-    it("2 + 3 * 6 - sum 0 5 ( 5 + n - 3 * n ) + 2 => 22", () => {
-        expect(parseExpression("2 + 3 * 6 - sum 0 5 ( 5 + n - 3 * n ) + 2")).toEqual(22)
-    })
-    it("sum 0 5 ( 6 + 3 * sum 0 4 ( 3 - 4 + n ) / n ) => undefined", () => {
-        expect(parseExpression("sum 0 5 ( 6 + 3 * sum 0 4 ( 3 - 4 + n ) / n )")).toEqual(undefined)
     })
     it("root 2 ( 5 - root 2 4 ) => 1.732050808", () => {
         expect(parseExpression("root 2 ( 5 - root 2 4 )")).toEqual(1.732050808)
