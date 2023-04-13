@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, screen } from 'electron'
+import { app, shell, BrowserWindow, screen, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -66,11 +66,30 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 
+  ipcMain.on('w:close', () => {
+    app.quit();
+  });
+
+  ipcMain.on('w:minimize', () => {
+    const mainWindow = BrowserWindow.getAllWindows()[0];
+    if (!mainWindow) {
+      return;
+    }
+
+    mainWindow.minimize();
+  });
+
   // BrowserWindow.getAllWindows()[0].setIgnoreMouseEvents(true);
 
   setInterval(() => {
-    const windowPos = BrowserWindow.getAllWindows()[0].getPosition()
-    const cursorPos = screen.getCursorScreenPoint()
+    const mainWindow = BrowserWindow.getAllWindows()[0];
+    if (!mainWindow) {
+      // window was already closed, we don't have anything to check.
+      return;
+    }
+
+    const windowPos = mainWindow.getPosition();
+    const cursorPos = screen.getCursorScreenPoint();
 
     const rcx = cursorPos.x - (windowPos[0] + 57) // TODO: calc 57 as padding with sin
     const rcy = cursorPos.y - windowPos[1]

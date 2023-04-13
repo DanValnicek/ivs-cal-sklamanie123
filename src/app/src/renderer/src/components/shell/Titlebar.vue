@@ -1,19 +1,14 @@
 <template>
   <div class="titlebar">
     <div class="content">
-      <div class="left">IVS Calc</div>
+      <div class="left">Calculator</div>
       <div class="controls">
-        <div class="control">
+        <div class="control" @click="onMinimizeClock">
           <span class="inner">
             <i class="ri-subtract-line"></i>
           </span>
         </div>
-        <div class="control">
-          <span class="inner">
-            <i class="ri-checkbox-blank-line"></i>
-          </span>
-        </div>
-        <div class="control control--close">
+        <div class="control control--close" @click="onCloseClick">
           <span class="inner">
             <i class="ri-close-line"></i>
           </span>
@@ -24,10 +19,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'Titlebar'
+  name: 'Titlebar',
+  methods: {
+    onMinimizeClock() {
+      // @ts-ignore - ipcRenderer is defined in the preload script
+      window.ipcRenderer.send('w:minimize');
+    },
+    onCloseClick() {
+      // @ts-ignore - ipcRenderer is defined in the preload script
+      window.ipcRenderer.send('w:close');
+    }
+  }
 })
 </script>
 
