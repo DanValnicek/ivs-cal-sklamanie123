@@ -1,7 +1,10 @@
-
 @font-face {
     font-family: jb;
     src: url("./assets/jbmono.ttf");
+}
+
+:root {
+    --t: 0.05s ease-out;
 }
 
 html {
@@ -17,4 +20,9 @@ body {
     padding: 0;
     box-sizing: border-box;
     font-family: jb, Arial, Helvetica, sans-serif;
+
+    // tieto farby chybaju: (farby buttnom calc)
+    // #272329
+    // #322C37
+    // #D6BAFF
 }
