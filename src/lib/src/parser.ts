@@ -1,14 +1,14 @@
-import {add, divide, multiply, subtract} from "./operations/basicArithmetic";
-import {powerOfN} from "./operations/powerOfN";
-import {sum} from "./operations/sum";
-import {nThRoot} from "./operations/nthroot";
+import {absolute, add, divide, multiply, subtract} from './operations/basicArithmetic';
+import {powerOfN} from './operations/powerOfN';
+import {sum} from './operations/sum';
+import {nThRoot} from './operations/nthroot';
+import {factorial} from "./operations/factorial";
 
 interface Operator {
     precedence: number;
     associativity: 'left' | 'right';
     func: Function;
 }
-
 
 const operatorTable: Record<string, Operator> = {
     '+': {precedence: 2, associativity: 'left', func: add},
@@ -19,12 +19,14 @@ const operatorTable: Record<string, Operator> = {
     '/': {precedence: 3, associativity: 'left', func: divide},
     '÷': {precedence: 3, associativity: 'left', func: divide},
     '^': {precedence: 4, associativity: 'right', func: powerOfN},
-    'root': {precedence: 4, associativity: 'right', func: nThRoot},
+    "root": {precedence: 4, associativity: 'right', func: nThRoot},
+    "fact": {precedence: 4, associativity: 'right', func: factorial},
+    "abs": {precedence: 4, associativity: 'right', func: absolute},
 };
 
 const functionTable: Record<string, Function> = {
-    'sum': sum,
-}
+    sum: sum,
+};
 
 function convertFunctionExpressionsToString(inputExpression: string[]): string[] {
 
@@ -49,7 +51,8 @@ function convertFunctionExpressionsToString(inputExpression: string[]): string[]
 
 // shunting yard algorithm https://en.wikipedia.org/wiki/Shunting_yard_algorithm
 export function convertRPN(expression: string): Array<number | string> {
-    if (expression.includes("$")) throw Error("Invalid character $")
+    expression = sanitizeInput(expression);
+    if (expression.includes("$")) throw Error("Invalid character $");
     let input: string[] = expression.split(" ");
     input = convertFunctionExpressionsToString(input);
 
@@ -123,4 +126,68 @@ export function parseExpression(expression: string): number | undefined {
         termList.splice(termIndex - argCount, argCount + 1, result);
     }
     return termList[0];
+}
+
+export function sanitizeInput(input: string): string {
+    let regex;
+
+    // return input (invalid) if it contains two numbers separated by any number of spaces
+    regex = /\d\s\d/g;
+    if (input.match(regex)) {
+        return input;
+    }
+
+    // remove all spaces
+    input = input.replace(/\s/g, '');
+
+
+    // replace all occurrences of "|x|" with "abs ( x )"
+    regex = /\|(.?\d+(\.\d+)?|\w+)\|/g;
+    input = input.replace(regex, "abs ( $1 )");
+
+    // replace all occurrences of "abs(x)" with "abs ( x )"
+    regex = /abs\((.+?)\)/g;
+    input = input.replace(regex, "abs ( $1 )");
+
+
+    // replace all occurrences of "rootY(X)" with "root Y ( X )"
+    regex = /root(\d+)\((.+?)\)/g;
+    input = input.replace(regex, "root $1 ( $2 )");
+
+
+    // replace all occurrences of "x!" with "fact ( x )"
+    regex = /(-?\d+(\.\d+)?|\w+)!/g;
+    input = input.replace(regex, "fact ( $1 )");
+
+    // replace all occurrences of "fact(x)" with "fact ( x )"
+    regex = /fact\((.+?)\)/g;
+    input = input.replace(regex, "fact ( $1 )");
+
+
+    // add space before and after every + * / ^
+    regex = /(\+|\*|\/|\^)/g;
+    input = input.replace(regex, " $1 ");
+
+    // add space after every - that if followed by function abs, root of fact
+    regex = /-(abs|root|fact)/g;
+    input = input.replace(regex, " - $1");
+
+    // add space before and after "-" when there is a ')' before it 
+    regex = /\)(-)/g;
+    input = input.replace(regex, ") $1 ");
+
+    // add space only before "-" when there is "(" before it
+    regex = /(\()(-)/g;
+    input = input.replace(regex, "$1 $2");
+
+    // add space before and after "-" when there is a number before it
+    regex = /(\d)(-)/g;
+    input = input.replace(regex, "$1 $2 ");
+
+
+    // remove any excess spaces
+    regex = /\s\s/g;
+    input = input.replace(regex, " ");
+
+    return input;
 }
