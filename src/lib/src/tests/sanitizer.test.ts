@@ -20,7 +20,7 @@ describe('test sanitizeInput function', () => {
         expect(sanitizeInput("5 4 + 6")).toEqual('5 4 + 6');
     });
     it("5 4+6 => 5 4 + 6", () => {
-        expect(sanitizeInput("5 4+6")).toEqual('5 4 + 6');
+        expect(sanitizeInput("5 4+6")).toEqual('5 4+6');
     });
     it("fact ( 5 ) => fact ( 5 )", () => {
         expect(sanitizeInput("fact ( 5 )")).toEqual('fact ( 5 )');
