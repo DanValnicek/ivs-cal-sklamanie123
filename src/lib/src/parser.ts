@@ -140,7 +140,6 @@ export function sanitizeInput(input: string): string {
     // remove all spaces
     input = input.replace(/\s/g, '');
 
-    // =================================================================
 
     // replace all occurrences of "|x|" with "abs ( x )"
     regex = /\|(.?\d+(\.\d+)?|\w+)\|/g;
@@ -150,13 +149,11 @@ export function sanitizeInput(input: string): string {
     regex = /abs\((.+?)\)/g;
     input = input.replace(regex, "abs ( $1 )");
 
-    // =================================================================
 
     // replace all occurrences of "rootY(X)" with "root Y ( X )"
     regex = /root(\d+)\((.+?)\)/g;
     input = input.replace(regex, "root $1 ( $2 )");
 
-    // =================================================================
 
     // replace all occurrences of "x!" with "fact ( x )"
     regex = /(-?\d+(\.\d+)?|\w+)!/g;
@@ -166,7 +163,6 @@ export function sanitizeInput(input: string): string {
     regex = /fact\((.+?)\)/g;
     input = input.replace(regex, "fact ( $1 )");
 
-    // =================================================================
 
     // add space before and after every + * / ^
     regex = /(\+|\*|\/|\^)/g;
@@ -188,9 +184,8 @@ export function sanitizeInput(input: string): string {
     regex = /(\d)(-)/g;
     input = input.replace(regex, "$1 $2 ");
 
-    // =================================================================
 
-    // remove any access spaces
+    // remove any excess spaces
     regex = /\s\s/g;
     input = input.replace(regex, " ");
 
