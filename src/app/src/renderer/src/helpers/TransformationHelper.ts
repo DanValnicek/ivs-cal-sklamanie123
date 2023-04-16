@@ -38,6 +38,11 @@ export default {
     // Insert value at the cursor position
     promptValue = strStart + action.data + strEnd;
 
+    // Adjust cursor position
+    cursorInfo.selectionStart = cursorInfo.selectionStart + 1;
+    cursorInfo.selectionEnd = cursorInfo.selectionStart + 1;
+    cursorInfo.selectionContent = '';
+
     return {
       cursorInfo,
       promptValue
