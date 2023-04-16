@@ -74,13 +74,13 @@ const TransformationHelper = {
       return;
     }
 
-    // We are modifying the the action in this method, so we make a local copy of it first
+    // We are modifying the the action and cursorInfo in this method, so we make a local copy of it first and use that
     const _action = JSON.parse(JSON.stringify(action));
     const _cursorInfo = JSON.parse(JSON.stringify(cursorInfo));
 
     if (
-      cursorInfo.selectionStart !== cursorInfo.selectionEnd &&
-      action.options?.wrapSelectedExpression
+      action.options?.wrapSelectedExpression && // wrapSelectedExpression is enabled
+      cursorInfo.selectionStart !== cursorInfo.selectionEnd // and nothing is selected
     ) {
       _action.data = _action.data.replaceAll('$', `(${cursorInfo.selectionContent})`);
     } else {
@@ -96,9 +96,11 @@ const TransformationHelper = {
     let expressionOffset = insertRetVal.promptValue.lastIndexOf('&');
     insertRetVal.promptValue = insertRetVal.promptValue.replaceAll('&', '');
 
-    if (action.options?.moveCursorInsideExpressionIfEmpty && cursorInfo.selectionStart === cursorInfo.selectionEnd) {
+    if (
+      action.options?.moveCursorInsideExpressionIfEmpty && // If moveCursorInsideExpressionIfEmpty is enabled
+      cursorInfo.selectionStart === cursorInfo.selectionEnd // and nothing is selected
+    ) {
       expressionOffset = insertRetVal.cursorInfo.selectionStart + action.data.replaceAll('&', '').lastIndexOf('$') - 1;
-      console.log(`Expression empty, moving to it. ${expressionOffset}`);
     }
 
     insertRetVal.cursorInfo.selectionStart = expressionOffset;
