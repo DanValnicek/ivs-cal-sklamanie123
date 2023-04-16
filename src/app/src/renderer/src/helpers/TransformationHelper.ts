@@ -32,10 +32,14 @@ export default {
       return;
     }
 
+    console.log(cursorInfo)
+
     // Split the string to part before selection and the part after it
     // Note that this omits the selection content.
     const strStart = promptValue.substring(0, cursorInfo.selectionStart);
     const strEnd = promptValue.substring(cursorInfo.selectionEnd, promptValue.length);
+
+    console.log(strStart, strEnd);
 
     // Insert value at the cursor position
     promptValue = strStart + action.data + strEnd;

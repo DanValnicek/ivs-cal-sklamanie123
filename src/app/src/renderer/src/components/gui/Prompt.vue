@@ -8,7 +8,7 @@
       @input="handleInput"
       @focus="handleCursorInfo"
       @click="handleCursorInfo"
-      @keydown="handleCursorInfo"
+      @keyup="handleCursorInfo"
     />
   </div>
 </template>
@@ -35,7 +35,7 @@ export default defineComponent({
   watch: {
     cursorInfo: {
       handler(newVal) {
-        console.log("wtf");
+        console.log(newVal);
         this.currentCursorPosition = newVal.selectionStart;
         if (newVal.refocus) {
           this.focusPrompt();
@@ -67,14 +67,16 @@ export default defineComponent({
       });
     },
     getCursorInfo() {
-      const prompt = this.$refs.prompt as HTMLTextAreaElement;
-      const cursorInfo = {
-        selectionStart: prompt.selectionStart || 0,
-        selectionEnd: prompt.selectionEnd || 0,
-        selectionContent: this.promptValue?.substring(prompt.selectionStart, prompt.selectionEnd) || ''
-      };
-      this.currentCursorPosition = cursorInfo.selectionStart;
-      this.$emit('update:cursorInfo', cursorInfo);
+      this.$nextTick(() => {
+        const prompt = this.$refs.prompt as HTMLTextAreaElement;
+        const cursorInfo = {
+          selectionStart: prompt.selectionStart || 0,
+          selectionEnd: prompt.selectionEnd || 0,
+          selectionContent: this.promptValue?.substring(prompt.selectionStart, prompt.selectionEnd) || ''
+        };
+        this.currentCursorPosition = cursorInfo.selectionStart;
+        this.$emit('update:cursorInfo', cursorInfo);
+      });
     }
   }
 });
