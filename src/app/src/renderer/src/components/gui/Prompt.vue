@@ -36,7 +36,6 @@ export default defineComponent({
   watch: {
     cursorInfo: {
       handler(newVal) {
-        console.log(newVal);
         this.currentCursorPosition = newVal.selectionStart;
         if (newVal.refocus) {
           this.focusPrompt();

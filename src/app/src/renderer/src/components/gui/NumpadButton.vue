@@ -47,7 +47,6 @@ export default defineComponent({
   },
   methods: {
     emitAction() {
-      console.log(this.action);
       this.$emit('action', this.action);
     }
   }

@@ -81,7 +81,6 @@ export default defineComponent({
       this.cursorInfo.selectionContent = this.promptValue.substring(this.cursorInfo.selectionStart, this.cursorInfo.selectionEnd);
     },
     handleNumpadAction(action: ButtonAction) {
-      console.log(action);
       const transformationFn = TransformationHelper[action.type];
 
       if (!transformationFn) {

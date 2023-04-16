@@ -24,7 +24,6 @@ const TransformationHelper = {
       const strStart = promptValue.substring(0, cursorInfo.selectionStart);
       const strEnd = promptValue.substring(cursorInfo.selectionEnd, promptValue.length);
 
-      console.log(strStart, strEnd);
       promptValue = strStart + strEnd;
       cursorInfo.selectionEnd = cursorInfo.selectionStart;
     }
@@ -43,14 +42,10 @@ const TransformationHelper = {
       return;
     }
 
-    console.log(cursorInfo)
-
     // Split the string to part before selection and the part after it
     // Note that this omits the selection content.
     const strStart = promptValue.substring(0, cursorInfo.selectionStart);
     const strEnd = promptValue.substring(cursorInfo.selectionEnd, promptValue.length);
-
-    console.log(strStart, strEnd);
 
     // Insert value at the cursor position
     promptValue = strStart + action.data + strEnd;
@@ -83,8 +78,6 @@ const TransformationHelper = {
     const _action = JSON.parse(JSON.stringify(action));
     const _cursorInfo = JSON.parse(JSON.stringify(cursorInfo));
 
-    console.log(_action.data, cursorInfo.selectionContent);
-
     if (
       cursorInfo.selectionStart !== cursorInfo.selectionEnd &&
       action.options?.wrapSelectedExpression
@@ -94,8 +87,6 @@ const TransformationHelper = {
       _action.data = _action.data.replaceAll('$', cursorInfo.selectionContent);
     }
 
-    console.log(_action.data, this);
-
     const insertRetVal = TransformationHelper.insert(_action, _cursorInfo, promptValue);
 
     if (!insertRetVal) {
@@ -104,8 +95,6 @@ const TransformationHelper = {
 
     let expressionOffset = insertRetVal.promptValue.lastIndexOf('&');
     insertRetVal.promptValue = insertRetVal.promptValue.replaceAll('&', '');
-
-    console.log(cursorInfo.selectionStart, cursorInfo.selectionEnd);
 
     if (action.options?.moveCursorInsideExpressionIfEmpty && cursorInfo.selectionStart === cursorInfo.selectionEnd) {
       expressionOffset = insertRetVal.cursorInfo.selectionStart + action.data.replaceAll('&', '').lastIndexOf('$') - 1;
