@@ -1,5 +1,5 @@
 <template>
-  <button @click="emitAction" class="button" :class="{
+  <button @mousedown="emitAction" class="button" :class="{
     'l-2': color == 'l-2',
     'l-accent': color == 'l-accent'
   }" :style="{ 'grid-area': area }">
