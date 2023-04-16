@@ -34,11 +34,11 @@ export default defineComponent({
         { value: '9', color: 'l-2', area: 'n9', action: { type: 'insert', data: 9 } },
         { value: '6', color: 'l-2', area: 'n6', action: { type: 'insert', data: 6 } },
         { value: '3', color: 'l-2', area: 'n3', action: { type: 'insert', data: 3 } },
-        { value: '.', color: 'l-2', area: 'dot' },
-        { value: '/ ', area: 'div', icon: 'div' },
-        { value: '* ', area: 'mul', icon: 'mul' },
-        { value: '- ', area: 'min', icon: 'min' },
-        { value: '+ ', area: 'plus', icon: 'plus' },
+        { value: '.', color: 'l-2', area: 'dot', action: { type: 'insert', data: '.' } },
+        { value: '/ ', area: 'div', icon: 'div', action: { type: 'insert', data: '/' } },
+        { value: '* ', area: 'mul', icon: 'mul', action: { type: 'insert', data: '*' } },
+        { value: '- ', area: 'min', icon: 'min', action: { type: 'insert', data: '-' } },
+        { value: '+ ', area: 'plus', icon: 'plus', action: { type: 'insert', data: '+' } },
         { value: 'eq', color: 'l-accent', area: 'eq', icon: 'eq' } //add event listener for ENTER
       ]
     }
