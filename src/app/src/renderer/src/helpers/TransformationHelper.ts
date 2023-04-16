@@ -1,6 +1,7 @@
 export default {
   clear: (action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined => {
     promptValue = '';
+    cursorInfo.refocus = true;
 
     return {
       cursorInfo,
@@ -17,6 +18,7 @@ export default {
     promptValue = strBeforeCursor + strAfterCursor;
     cursorInfo.selectionStart--;
     cursorInfo.selectionEnd--;
+    cursorInfo.refocus = true;
 
     return {
       cursorInfo,
@@ -42,6 +44,7 @@ export default {
     cursorInfo.selectionStart = cursorInfo.selectionStart + 1;
     cursorInfo.selectionEnd = cursorInfo.selectionStart + 1;
     cursorInfo.selectionContent = '';
+    cursorInfo.refocus = true;
 
     return {
       cursorInfo,

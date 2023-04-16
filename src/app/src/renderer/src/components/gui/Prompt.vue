@@ -1,7 +1,15 @@
 <template>
   <div class="prompt-container">
-    <input ref="prompt" :value="promptValue" class="prompt-text" @blur="handleBlur" @input="handleInput"
-      @focus="handleCursorInfo" @click="handleCursorInfo" @keydown="handleCursorInfo" />
+    <input
+      ref="prompt"
+      :value="promptValue"
+      class="prompt-text"
+      @blur="handleBlur"
+      @input="handleInput"
+      @focus="handleCursorInfo"
+      @click="handleCursorInfo"
+      @keydown="handleCursorInfo"
+    />
   </div>
 </template>
 
@@ -27,8 +35,11 @@ export default defineComponent({
   watch: {
     cursorInfo: {
       handler(newVal) {
+        console.log("wtf");
         this.currentCursorPosition = newVal.selectionStart;
-        this.focusPrompt();
+        if (newVal.refocus) {
+          this.focusPrompt();
+        }
       },
       deep: true
     }
