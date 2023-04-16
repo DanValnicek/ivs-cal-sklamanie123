@@ -67,24 +67,50 @@ const TransformationHelper = {
     };
   },
 
+  /**
+   * action.data contains template string where:
+   *  - `$` signifies the selected expression (empty string will be substituted if nothing is selected)
+   *  - `&` signifies the cursor position after the transformation. This can be overwritten using the
+   *        action.options.moveCursorInsideExpressionIfEmpty, which will move the cursor to $ instead if nothing is selected
+   */
   wrap: function (action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined {
     if (action.data === undefined) {
       console.warn('No wrap syntax!');
       return;
     }
 
-    action.data = action.data.replaceAll('$', cursorInfo.selectionContent);
+    // We are modifying the the action in this method, so we make a local copy of it first
+    const _action = JSON.parse(JSON.stringify(action));
+    const _cursorInfo = JSON.parse(JSON.stringify(cursorInfo));
 
-    console.log(action.data, this);
+    console.log(_action.data, cursorInfo.selectionContent);
 
-    const insertRetVal = TransformationHelper.insert(action, cursorInfo, promptValue);
+    if (
+      cursorInfo.selectionStart !== cursorInfo.selectionEnd &&
+      action.options?.wrapSelectedExpression
+    ) {
+      _action.data = _action.data.replaceAll('$', `(${cursorInfo.selectionContent})`);
+    } else {
+      _action.data = _action.data.replaceAll('$', cursorInfo.selectionContent);
+    }
+
+    console.log(_action.data, this);
+
+    const insertRetVal = TransformationHelper.insert(_action, _cursorInfo, promptValue);
 
     if (!insertRetVal) {
       return;
     }
 
-    const expressionOffset = insertRetVal.promptValue.lastIndexOf('&');
+    let expressionOffset = insertRetVal.promptValue.lastIndexOf('&');
     insertRetVal.promptValue = insertRetVal.promptValue.replaceAll('&', '');
+
+    console.log(cursorInfo.selectionStart, cursorInfo.selectionEnd);
+
+    if (action.options?.moveCursorInsideExpressionIfEmpty && cursorInfo.selectionStart === cursorInfo.selectionEnd) {
+      expressionOffset = insertRetVal.cursorInfo.selectionStart + action.data.replaceAll('&', '').lastIndexOf('$') - 1;
+      console.log(`Expression empty, moving to it. ${expressionOffset}`);
+    }
 
     insertRetVal.cursorInfo.selectionStart = expressionOffset;
     insertRetVal.cursorInfo.selectionEnd = expressionOffset;
