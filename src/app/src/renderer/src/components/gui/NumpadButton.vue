@@ -1,5 +1,5 @@
 <template>
-  <button @click="emitUserInput" class="button" :class="{
+  <button @click="emitAction" class="button" :class="{
     'l-2': color == 'l-2',
     'l-accent': color == 'l-accent'
   }" :style="{ 'grid-area': area }">
@@ -32,8 +32,11 @@ export default defineComponent({
       type: String,
       required: true
     },
+    action: {
+      type: Object
+    }
   },
-  emits: ['user-input'],
+  emits: ['action'],
   data() {
     return {
       imageSrc: ''
@@ -43,8 +46,9 @@ export default defineComponent({
     this.imageSrc = new URL(`../../assets/icons/${this.icon}.svg`, import.meta.url).href;
   },
   methods: {
-    emitUserInput() {
-      this.$emit('user-input', this.value); //this needs to be unique for every button clicked even when it is the same button pressed twice
+    emitAction() {
+      console.log(this.action);
+      this.$emit('action', this.action);
     }
   }
 });

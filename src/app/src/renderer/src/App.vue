@@ -4,7 +4,7 @@
       <titlebar />
       <div class="content">
         <ScreenVue v-model:promptValue="promptValue" v-model:cursorInfo="cursorInfo" />
-        <NumpadVue @user-input="handleUserInput" />
+        <NumpadVue @action="handleNumpadAction" />
       </div>
     </div>
   </div>
@@ -18,6 +18,8 @@ import { argbFromHex, hexFromArgb, themeFromSourceColor } from '@material/materi
 import Titlebar from './components/shell/Titlebar.vue';
 import ScreenVue from './components/gui/Screen.vue';
 import NumpadVue from './components/gui/Numpad.vue';
+
+import TransformationHelper from './helpers/TransformationHelper';
 
 export default defineComponent({
   name: 'App',
@@ -78,18 +80,20 @@ export default defineComponent({
       this.cursorInfo.selectionEnd = cursorInfo.selectionEnd;
       this.cursorInfo.selectionContent = this.promptValue.substring(this.cursorInfo.selectionStart, this.cursorInfo.selectionEnd);
     },
-    handleUserInput(userInput: string) {
-      if (userInput === 'clr') this.promptValue = '';
+    handleNumpadAction(action: ButtonAction) {
+      console.log(action);
+      const transformationFn = TransformationHelper[action.type];
 
-      if (userInput === 'bs') {
-        if (this.cursorInfo.selectionStart === 0) {
-          return;
-        }
-        const strBeforeCursor = this.promptValue.substring(0, this.cursorInfo.selectionStart - 1);
-        const strAfterCursor = this.promptValue.substring(this.cursorInfo.selectionStart);
-        this.promptValue = strBeforeCursor + strAfterCursor;
-        this.cursorInfo.selectionStart--;
-        this.cursorInfo.selectionEnd--;
+      if (!transformationFn) {
+        console.warn(`Action type '${action.type}' does not exist in transformation functions`);
+        return;
+      }
+
+      const fnRes = transformationFn(action, this.cursorInfo, this.promptValue);
+
+      if (fnRes) {
+        this.cursorInfo = fnRes.cursorInfo;
+        this.promptValue = fnRes.promptValue;
       }
     },
     updatePromptValue(newPromptValue: string) {
