@@ -27,7 +27,7 @@ export default {
   },
 
   insert: (action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined => {
-    if (!action.data) {
+    if (action.data === undefined) {
       console.warn('No data to insert!');
       return;
     }
