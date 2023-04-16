@@ -33,6 +33,12 @@ module.exports = {
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off'
       }
-    }
+    },
+    {
+      files: ['*.ts', '*.vue'], // ESLint is very funny with global ts types, so we disable it. Typescript already does the necessary checks.
+      rules: {
+        'no-undef': 'off',
+      },
+    },
   ]
 }

@@ -1,7 +1,16 @@
 <template>
   <div class="prompt-container">
-    <input ref="prompt" :value="promptValue" class="prompt-text" @blur="handleBlur" @input="handleInput"
-      @focus="handleCursorInfo" @click="handleCursorInfo" @keydown="handleCursorInfo" />
+    <input
+      ref="prompt"
+      :value="promptValue"
+      class="prompt-text"
+      @blur="handleBlur"
+      @input="handleInput"
+      @focus="handleCursorInfo"
+      @click="handleCursorInfo"
+      @mouseout="handleMouseout"
+      @keyup="handleCursorInfo"
+    />
   </div>
 </template>
 
@@ -28,7 +37,9 @@ export default defineComponent({
     cursorInfo: {
       handler(newVal) {
         this.currentCursorPosition = newVal.selectionStart;
-        this.focusPrompt();
+        if (newVal.refocus) {
+          this.focusPrompt();
+        }
       },
       deep: true
     }
@@ -43,6 +54,10 @@ export default defineComponent({
     handleCursorInfo() {
       this.getCursorInfo();
     },
+    handleMouseout() {
+      // I know this is a hacky way to do this, but there is literally no other way, except watching selection every ms soooo...
+      setTimeout(this.handleCursorInfo, 1);
+    },
     handleInput() {
       const prompt = this.$refs.prompt as HTMLTextAreaElement;
       const newPromptValue = prompt.value;
@@ -56,14 +71,16 @@ export default defineComponent({
       });
     },
     getCursorInfo() {
-      const prompt = this.$refs.prompt as HTMLTextAreaElement;
-      const cursorInfo = {
-        selectionStart: prompt.selectionStart || 0,
-        selectionEnd: prompt.selectionEnd || 0,
-        selectionContent: this.promptValue?.substring(prompt.selectionStart, prompt.selectionEnd) || ''
-      };
-      this.currentCursorPosition = cursorInfo.selectionStart;
-      this.$emit('update:cursorInfo', cursorInfo);
+      this.$nextTick(() => {
+        const prompt = this.$refs.prompt as HTMLTextAreaElement;
+        const cursorInfo = {
+          selectionStart: prompt.selectionStart || 0,
+          selectionEnd: prompt.selectionEnd || 0,
+          selectionContent: this.promptValue?.substring(prompt.selectionStart, prompt.selectionEnd) || ''
+        };
+        this.currentCursorPosition = cursorInfo.selectionStart;
+        this.$emit('update:cursorInfo', cursorInfo);
+      });
     }
   }
 });
