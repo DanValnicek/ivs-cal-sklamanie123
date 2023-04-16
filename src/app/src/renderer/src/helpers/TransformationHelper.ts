@@ -1,5 +1,5 @@
-export default {
-  clear: (action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined => {
+const TransformationHelper = {
+  clear: function (action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined {
     promptValue = '';
     cursorInfo.refocus = true;
 
@@ -9,7 +9,7 @@ export default {
     };
   },
 
-  backspace: (action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined => {
+  backspace: function (action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined {
     if (cursorInfo.selectionStart === cursorInfo.selectionEnd) {
       if (cursorInfo.selectionStart === 0) {
         return;
@@ -37,7 +37,7 @@ export default {
     };
   },
 
-  insert: (action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined => {
+  insert: function (action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined {
     if (action.data === undefined) {
       console.warn('No data to insert!');
       return;
@@ -66,4 +66,31 @@ export default {
       promptValue
     };
   },
+
+  wrap: function (action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined {
+    if (action.data === undefined) {
+      console.warn('No wrap syntax!');
+      return;
+    }
+
+    action.data = action.data.replaceAll('$', cursorInfo.selectionContent);
+
+    console.log(action.data, this);
+
+    const insertRetVal = TransformationHelper.insert(action, cursorInfo, promptValue);
+
+    if (!insertRetVal) {
+      return;
+    }
+
+    const expressionOffset = insertRetVal.promptValue.lastIndexOf('&');
+    insertRetVal.promptValue = insertRetVal.promptValue.replaceAll('&', '');
+
+    insertRetVal.cursorInfo.selectionStart = expressionOffset;
+    insertRetVal.cursorInfo.selectionEnd = expressionOffset;
+
+    return insertRetVal;
+  },
 };
+
+export default TransformationHelper;

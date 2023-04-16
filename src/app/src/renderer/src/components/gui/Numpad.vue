@@ -17,20 +17,20 @@ export default defineComponent({
   data() {
     return {
       buttonsData: [
-        { value: 'abs ', area: 'abs', icon: 'abs' },
-        { value: '!', area: 'fac', icon: 'fact' },
+        { value: 'abs ', area: 'abs', icon: 'abs', action: { type: 'wrap', data: '|$&|' } },
+        { value: '!', area: 'fac', icon: 'fact', action: { type: 'wrap', data: '($&)!' }  },
         { value: '7', color: 'l-2', area: 'n7', action: { type: 'insert', data: 7 } },
         { value: '4', color: 'l-2', area: 'n4', action: { type: 'insert', data: 4 } },
         { value: '1', color: 'l-2', area: 'n1', action: { type: 'insert', data: 1 } },
-        { value: 'pm', color: 'l-2', area: 'pm', icon: 'pm' }, //change current number to negative
+        { value: 'pm', color: 'l-2', area: 'pm', icon: 'pm', action: { type: 'wrap', data: '-($&)' } }, //change current number to negative
         { value: 'clr', area: 'clr', icon: 'clr', action: { type: 'clear' } },
-        { value: 'root ', area: 'root', icon: 'root' },
+        { value: 'root ', area: 'root', icon: 'root', action: { type: 'wrap', data: 'root&($)' } },
         { value: '8', color: 'l-2', area: 'n8', action: { type: 'insert', data: 8 } },
         { value: '5', color: 'l-2', area: 'n5', action: { type: 'insert', data: 5 } },
         { value: '2', color: 'l-2', area: 'n2', action: { type: 'insert', data: 2 } },
         { value: '0', color: 'l-2', area: 'n0', action: { type: 'insert', data: 0 } },
         { value: 'bs', area: 'bs', icon: 'bs', action: { type: 'backspace' } },
-        { value: '^ ', area: 'pow', icon: 'pow' },
+        { value: '^ ', area: 'pow', icon: 'pow', action: { type: 'wrap', data: '($)^&' } },
         { value: '9', color: 'l-2', area: 'n9', action: { type: 'insert', data: 9 } },
         { value: '6', color: 'l-2', area: 'n6', action: { type: 'insert', data: 6 } },
         { value: '3', color: 'l-2', area: 'n3', action: { type: 'insert', data: 3 } },
@@ -39,7 +39,7 @@ export default defineComponent({
         { value: '* ', area: 'mul', icon: 'mul', action: { type: 'insert', data: '*' } },
         { value: '- ', area: 'min', icon: 'min', action: { type: 'insert', data: '-' } },
         { value: '+ ', area: 'plus', icon: 'plus', action: { type: 'insert', data: '+' } },
-        { value: 'eq', color: 'l-accent', area: 'eq', icon: 'eq' } //add event listener for ENTER
+        { value: 'eq', color: 'l-accent', area: 'eq', icon: 'eq', action: { type: 'evaluate' } } //add event listener for ENTER
       ]
     }
   },
