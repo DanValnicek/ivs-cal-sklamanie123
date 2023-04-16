@@ -8,6 +8,7 @@
       @input="handleInput"
       @focus="handleCursorInfo"
       @click="handleCursorInfo"
+      @mouseout="handleMouseout"
       @keyup="handleCursorInfo"
     />
   </div>
@@ -53,6 +54,10 @@ export default defineComponent({
     },
     handleCursorInfo() {
       this.getCursorInfo();
+    },
+    handleMouseout() {
+      // I know this is a hacky way to do this, but there is literally no other way, except watching selection every ms soooo...
+      setTimeout(this.handleCursorInfo, 1);
     },
     handleInput() {
       const prompt = this.$refs.prompt as HTMLTextAreaElement;
