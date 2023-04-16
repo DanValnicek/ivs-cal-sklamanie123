@@ -10,14 +10,25 @@ export default {
   },
 
   backspace: (action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined => {
-    if (cursorInfo.selectionStart === 0) {
-      return;
+    if (cursorInfo.selectionStart === cursorInfo.selectionEnd) {
+      if (cursorInfo.selectionStart === 0) {
+        return;
+      }
+
+      const strBeforeCursor = promptValue.substring(0, cursorInfo.selectionStart - 1);
+      const strAfterCursor = promptValue.substring(cursorInfo.selectionStart);
+      promptValue = strBeforeCursor + strAfterCursor;
+      cursorInfo.selectionStart--;
+      cursorInfo.selectionEnd--;
+    } else {
+      const strStart = promptValue.substring(0, cursorInfo.selectionStart);
+      const strEnd = promptValue.substring(cursorInfo.selectionEnd, promptValue.length);
+
+      console.log(strStart, strEnd);
+      promptValue = strStart + strEnd;
+      cursorInfo.selectionEnd = cursorInfo.selectionStart;
     }
-    const strBeforeCursor = promptValue.substring(0, cursorInfo.selectionStart - 1);
-    const strAfterCursor = promptValue.substring(cursorInfo.selectionStart);
-    promptValue = strBeforeCursor + strAfterCursor;
-    cursorInfo.selectionStart--;
-    cursorInfo.selectionEnd--;
+
     cursorInfo.refocus = true;
 
     return {
