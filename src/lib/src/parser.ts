@@ -6,7 +6,7 @@ import {factorial} from "./operations/factorial";
 
 /**
  * Operator interface
- * @typedef { precedence: number, associativity: 'left'|'right', func: Function }
+ * @interface { precedence: number, associativity: 'left'|'right', func: Function }
  */
 interface Operator {
     precedence: number;
