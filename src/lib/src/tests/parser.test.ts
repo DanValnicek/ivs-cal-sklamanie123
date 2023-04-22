@@ -12,7 +12,7 @@ describe('test parseRPN function', () => {
         expect(convertRPN("2 + 3 * 6 - sum 0 5 ( 5 + n - 3 * n ) + 2")).toEqual([2, 3, 6, "*", "+", 0, 5, "5 + n - 3 * n", "sum", "-", 2, "+"])
     })
     it("sum 0 5 ( 6 + 3 * sum 0 4 ( 3 - 4 + n ) / n ) => 0 5 6 3 0 4 3 4 - n + sum * n / + sum", () => {
-        expect(convertRPN("sum 0 5 ( 6 + 3 * sum 0 4 ( 3 - 4 + n ) / n )")).toEqual([0, 5, 6, 3, 0, 4, 3, 4, "-", "n", "+", "sum", "*", "n", "/", "+", "sum"])
+        expect(convertRPN("sum 0 5 ( 6 + 3 * sum 0 4 ( 3 - 4 + n ) / n )")).toEqual([0, 5, "6 + 3 * sum 0 4 ( 3 - 4 + n ) / n", "sum"])
     })
     it("root 2 ( 5 - root 2 4 ) => 2 5 2 4 root - root", () => {
         expect(convertRPN("root 2 ( 5 - root 2 4 )")).toEqual([2, 5, 2, 4, "root", "-", "root"])
@@ -33,8 +33,8 @@ describe('test parse expression function', () => {
         expect(parseExpression("root 2 ( 5 - root 2 4 )")).toEqual(1.732050808)
     })
     it("5 4 + 6", () => {
-        expect(() => parseExpression("5 4 + 6")).toThrowError("Parse error")
-        expect(() => parseExpression("5 4+6")).toThrowError("Parse error")
+        expect(() => parseExpression("5 4 + 6")).toThrowError("Parse exception")
+        expect(() => parseExpression("5 4+6")).toThrowError("Parse exception")
     })
     it("fact ( 5 ) => 120", () => {
         expect(parseExpression("fact ( 5 )")).toEqual(120)
