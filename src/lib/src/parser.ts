@@ -33,7 +33,6 @@ function convertFunctionExpressionsToString(inputExpression: string[]): string[]
     let indexOfFunction = inputExpression.findIndex(value => functionTable[value]);
 
     while (indexOfFunction != -1) {
-
         let functionExpressionIndex = inputExpression.slice(indexOfFunction).findIndex(value => value == "(") + indexOfFunction;
         inputExpression.splice(functionExpressionIndex, 1, "$");
         for (let nestedParentheses = 0; inputExpression[functionExpressionIndex + 1] != ")" || nestedParentheses != 0;) {
@@ -48,6 +47,7 @@ function convertFunctionExpressionsToString(inputExpression: string[]): string[]
     }
     return inputExpression;
 }
+
 
 // shunting yard algorithm https://en.wikipedia.org/wiki/Shunting_yard_algorithm
 export function convertRPN(expression: string): Array<number | string> {
@@ -68,7 +68,7 @@ export function convertRPN(expression: string): Array<number | string> {
         else if (functionTable[currentToken])
             operatorStack.push(currentToken);
         else if (currentToken.startsWith("$"))
-            output.push(currentToken.replace("$ ",""));
+            output.push(currentToken.replace("$ ", ""));
         else if (operatorTable[currentToken]) {
             while (
                 // @ts-ignore
@@ -97,7 +97,7 @@ export function convertRPN(expression: string): Array<number | string> {
             //remove "("
             operatorStack.pop();
         } else {
-            throw Error("Unexpected token");
+            throw Error("Parse error: Unexpected token");
         }
     }
     if (operatorStack.find(element => element === "(" || element === ")")) throw Error("Mismatched parentheses");
@@ -121,6 +121,7 @@ export function parseExpression(expression: string): number | undefined {
         let argCount = operation.length;
 
         let args = termList.slice(termIndex - argCount, termIndex);
+        if(args.length != argCount)throw Error("Parse exception: Invalid number of arguments");
         let result = operation.apply(null, args);
         if (result == undefined) return undefined;
         termList.splice(termIndex - argCount, argCount + 1, result);
