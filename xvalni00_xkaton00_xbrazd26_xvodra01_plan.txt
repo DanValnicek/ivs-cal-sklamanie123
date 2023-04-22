@@ -46,15 +46,30 @@ Plán projektu
 8. problemy.txt - 9.5.
 
 TODO:
-front-end
-  TOOLTIPS
-MakeFile
-debian package
-dokumentacia - technická aj uživateľská - pondelok utorok
-debugging
-profiling
-mockup
-vyhodnotenie
+  MARTIN
+  debian package
+
+  DAN
+  debugging
+  profiling
+  MakeFile
+
+  LUKAS
+  mockup
+
+  JAKUB A LUKAS
+  dokumentacia
+
+  JAKUB
+  tooltips
+
+  VSETCI v utorok
+  vyhodnotenie
+    skutecnost.txt
+    hodnoceni.txt
+  otestovat na virtualke - utorok
+  skontrolovat strukturu repozitara
+  README.md
 
 
   
