@@ -45,4 +45,16 @@ Plán projektu
 7. Prezentace (Lukáš Katona) - 9.5.
 8. problemy.txt - 9.5.
 
+TODO:
+front-end
+  TOOLTIPS
+MakeFile
+debian package
+dokumentacia - technická aj uživateľská - pondelok utorok
+debugging
+profiling
+mockup
+vyhodnotenie
+
+
   
