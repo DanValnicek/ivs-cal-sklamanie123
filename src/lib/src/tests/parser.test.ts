@@ -44,8 +44,5 @@ describe('test parse expression function', () => {
         expect(parseExpression("fact ( 5 ) - root 3 ( 8 ) + abs ( -6 ) ^ 2")).toEqual(154)
         expect(parseExpression("fact(5 )- root3(8 ) +|-6|^2")).toEqual(154)
     })
-    it("+- => error", () => {
-        () => expect(parseExpression("+-")).toThrowError();
-    })
 
 })
