@@ -4,6 +4,7 @@
       ref="prompt"
       :value="promptValue"
       class="prompt-text"
+      :class="{ error: error }"
       @blur="handleBlur"
       @input="handleInput"
       @focus="handleCursorInfo"
@@ -22,6 +23,9 @@ export default defineComponent({
   props: {
     promptValue: {
       type: String
+    },
+    error: {
+      type: Boolean
     },
     cursorInfo: {
       type: Object
@@ -104,6 +108,11 @@ export default defineComponent({
     font-family: jb;
 
     color: white;
+    transition: color var(--t);
+
+    &.error {
+      color: var(--c-error);
+    }
   }
 }
 </style>

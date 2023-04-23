@@ -1,7 +1,7 @@
 <template>
   <div class="result-container">
-    <div class="result-text">
-      {{ result || 0 }}
+    <div class="result-text" :class="{ error: error }">
+      {{ value || 0 }}
     </div>
   </div>
 </template>
@@ -11,6 +11,14 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'Result',
+  props: {
+    value: {
+      type: Number
+    },
+    error: {
+      type: Boolean
+    }
+  },
   data() {
     return {
       result: null
@@ -31,6 +39,10 @@ export default defineComponent({
     padding: 8px;
     font-size: 32px;
     font-weight: 500;
+
+    &.error {
+      color: var(--c-error);
+    }
   }
 }
 </style>
