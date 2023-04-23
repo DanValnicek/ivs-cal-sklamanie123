@@ -4,12 +4,21 @@ import {sum} from './operations/sum';
 import {nThRoot} from './operations/nthroot';
 import {factorial} from "./operations/factorial";
 
+/**
+ * Operator interface
+ * @interface { precedence: number, associativity: 'left'|'right', func: Function }
+ */
 interface Operator {
     precedence: number;
     associativity: 'left' | 'right';
     func: Function;
 }
 
+/**
+ * Table of mathematical operations
+ *  Used for looking up operations in an expression
+ * @typedef { op name: string { precedence: number, associativity: 'left'|'right', Function } }
+ */
 const operatorTable: Record<string, Operator> = {
     '+': {precedence: 2, associativity: 'left', func: add},
     '-': {precedence: 2, associativity: 'left', func: subtract},
@@ -24,44 +33,71 @@ const operatorTable: Record<string, Operator> = {
     "abs": {precedence: 4, associativity: 'right', func: absolute},
 };
 
+/**
+ * Table of predefinded functions
+ *  @typdef {name: string, Function}
+ */
 const functionTable: Record<string, Function> = {
     sum: sum,
 };
 
+/**
+ * @description Cancels the splitting into separate objects in array for nested functions
+ * @param inputExpression array of objects from expression
+ * @returns array of values with nested expression of function as single object that is marked by the "$" character
+ * @example [0, 5, 6, 3, 0, 4, 3, 4, "-", "n", "+", "sum", "*", "n", "/", "+", "sum"]
+ *       => [0, 5, "$ 6 + 3 * sum 0 4 ( 3 - 4 + n ) / n", "sum"]
+ */
 function convertFunctionExpressionsToString(inputExpression: string[]): string[] {
 
     let indexOfFunction = inputExpression.findIndex(value => functionTable[value]);
 
     while (indexOfFunction != -1) {
+        //finds index of expression for function that should be enclosed in parentheses
         let functionExpressionIndex = inputExpression.slice(indexOfFunction).findIndex(value => value == "(") + indexOfFunction;
+        //deletes "(" and replaces it for $ that marks expressions
         inputExpression.splice(functionExpressionIndex, 1, "$");
         for (let nestedParentheses = 0; inputExpression[functionExpressionIndex + 1] != ")" || nestedParentheses != 0;) {
             if (inputExpression[functionExpressionIndex + 1] == "(") nestedParentheses++;
             if (inputExpression[functionExpressionIndex + 1] == ")") nestedParentheses--;
 
+            //join objects inside expression to single string
             inputExpression.splice(functionExpressionIndex, 2, inputExpression.slice(functionExpressionIndex, functionExpressionIndex + 2).join(" "));
         }
+        //deletes ending ")"
         inputExpression.splice(functionExpressionIndex + 1, 1);
 
+        //find next function inside expression. Returns -1 if there isn't one.
         indexOfFunction = inputExpression.slice(functionExpressionIndex).findIndex(value => functionTable[value] != undefined);
     }
     return inputExpression;
 }
 
-
-// shunting yard algorithm https://en.wikipedia.org/wiki/Shunting_yard_algorithm
+/**
+ * @description Converts expression postfix notation (RPN Reverse Polish Notation) represented by array of strings and numbers.
+ *  shunting yard algorithm https://en.wikipedia.org/wiki/Shunting_yard_algorithm
+ * @param expression expression in infix notation
+ * @returns array representing  expression in postfix notation
+ * @example "sum 0 5 ( 6 + 3 * sum 0 4 ( 3 - 4 + n ) / n )"
+ *       => [0, 5, "6 + 3 * sum 0 4 ( 3 - 4 + n ) / n", "sum"]
+ */
 export function convertRPN(expression: string): Array<number | string> {
+    //input sanitization so it can be split by space
     expression = sanitizeInput(expression);
+
+    //expression shouldn't contain the "$" character that is used to mark sub expressions of nested functions
     if (expression.includes("$")) throw Error("Invalid character $");
     let input: string[] = expression.split(" ");
     input = convertFunctionExpressionsToString(input);
 
     if (input == undefined) throw Error("Parsing error");
     let output: Array<number | string> = [];
+    //top element is operatorStack.at(-1)
     let operatorStack: string[] = [];
     let currentToken: string;
     while (input.length) {
         if (input[0] === undefined) throw Error("Undefined symbol");
+        // take first element from input
         currentToken = input.shift() || "";
         if (!isNaN(Number(currentToken)))
             output.push(Number(currentToken));
@@ -70,6 +106,7 @@ export function convertRPN(expression: string): Array<number | string> {
         else if (currentToken.startsWith("$"))
             output.push(currentToken.replace("$ ", ""));
         else if (operatorTable[currentToken]) {
+            // pushes operations that should be done before current to output
             while (
                 // @ts-ignore
             functionTable[operatorStack.at(-1)] ||
@@ -83,7 +120,7 @@ export function convertRPN(expression: string): Array<number | string> {
                 ) {
                 // @ts-ignore
                 output.push(operatorStack.pop());
-            }
+            }//end while
             operatorStack.push(currentToken);
         } else if (currentToken == "(") {
             operatorStack.push(currentToken);
@@ -99,7 +136,7 @@ export function convertRPN(expression: string): Array<number | string> {
         } else {
             throw Error("Parse exception: Invalid number of arguments");
         }
-    }
+    }//end while(input.length)
     if (operatorStack.find(element => element === "(" || element === ")")) throw Error("Mismatched parentheses");
     // reverse to concat as stack
     operatorStack.reverse();
@@ -108,22 +145,34 @@ export function convertRPN(expression: string): Array<number | string> {
     return output;
 }
 
+/**
+ * Parses expression and evaluates numerical value of given expression
+ * @param expression expression in infix notation
+ * @returns numerical value of expression
+ * @example "2 + 2" => 4
+ * @example "fact ( 5 ) - root 3 ( 8 ) + abs(-6)^2" => 154
+ */
 export function parseExpression(expression: string): number | undefined {
     let termList = convertRPN(expression);
     while (termList.length != 1 || typeof termList[0] != "number") {
+        //find operation of function
         let term = termList.find(value => operatorTable[value] || functionTable[value]);
         if (term == undefined) throw Error("Parse error");
         let termIndex = termList.indexOf(term);
 
+        //find function in tables
         let operation = operatorTable[term].func;
         if (operation == null) operation = functionTable[term];
 
         let argCount = operation.length;
 
+        //gets arguments from termList
         let args = termList.slice(termIndex - argCount, termIndex);
-        if(args.length != argCount)throw Error("Parse exception: Invalid number of arguments");
+        if (args.length != argCount) throw Error("Parse exception: Invalid number of arguments");
+        //use function of operation
         let result = operation.apply(null, args);
         if (result == undefined) return undefined;
+        //replaces arguments with operation or function for result
         termList.splice(termIndex - argCount, argCount + 1, result);
     }
     return termList[0];
