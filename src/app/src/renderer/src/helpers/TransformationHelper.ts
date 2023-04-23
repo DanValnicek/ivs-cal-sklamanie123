@@ -42,6 +42,8 @@ const TransformationHelper = {
       return;
     }
 
+    action.data = action.data.toString();
+
     // Split the string to part before selection and the part after it
     // Note that this omits the selection content.
     const strStart = promptValue.substring(0, cursorInfo.selectionStart);
@@ -50,9 +52,11 @@ const TransformationHelper = {
     // Insert value at the cursor position
     promptValue = strStart + action.data + strEnd;
 
+    console.log(action.data, action.data.length);
+
     // Adjust cursor position
-    cursorInfo.selectionStart = cursorInfo.selectionStart + 1;
-    cursorInfo.selectionEnd = cursorInfo.selectionStart + 1;
+    cursorInfo.selectionStart = cursorInfo.selectionStart + action.data.length;
+    cursorInfo.selectionEnd = cursorInfo.selectionStart + action.data.length;
     cursorInfo.selectionContent = '';
     cursorInfo.refocus = true;
 
