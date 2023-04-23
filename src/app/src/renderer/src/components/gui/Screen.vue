@@ -1,7 +1,7 @@
 <template>
   <div>
     <PromptVue v-model:promptValue="pPromptValue" v-model:cursorInfo="pCursorInfo" :error="promptError" />
-    <ResultVue :value="promptEvaluation" />
+    <ResultVue :value="promptEvaluation" :error="promptError" />
   </div>
 </template>
 

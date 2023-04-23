@@ -1,6 +1,6 @@
 <template>
   <div class="result-container">
-    <div class="result-text">
+    <div class="result-text" :class="{ error: error }">
       {{ value || 0 }}
     </div>
   </div>
@@ -14,6 +14,9 @@ export default defineComponent({
   props: {
     value: {
       type: Number
+    },
+    error: {
+      type: Boolean
     }
   },
   data() {
@@ -36,6 +39,10 @@ export default defineComponent({
     padding: 8px;
     font-size: 32px;
     font-weight: 500;
+
+    &.error {
+      color: var(--c-error);
+    }
   }
 }
 </style>
