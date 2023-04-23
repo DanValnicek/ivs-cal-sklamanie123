@@ -1,7 +1,7 @@
 <template>
   <div class="result-container">
     <div class="result-text">
-      {{ result || 0 }}
+      {{ value || 0 }}
     </div>
   </div>
 </template>
@@ -11,6 +11,11 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'Result',
+  props: {
+    value: {
+      type: Number
+    }
+  },
   data() {
     return {
       result: null

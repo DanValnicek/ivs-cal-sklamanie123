@@ -18,7 +18,7 @@ export default defineComponent({
     return {
       buttonsData: [
         { value: '.', color: 'l-2', area: 'dot', action: { type: 'insert', data: '.' } },
-        { icon: 'pm', color: 'l-2', area: 'pm', action: { type: 'wrap', data: '-($)&' } }, //change current number to negative
+        { value: '000', color: 'l-2', area: 'z3', action: { type: 'insert', data: '000' } }, //change current number to negative
         { value: '0', color: 'l-2', area: 'n0', action: { type: 'insert', data: 0 } },
         { value: '1', color: 'l-2', area: 'n1', action: { type: 'insert', data: 1 } },
         { value: '2', color: 'l-2', area: 'n2', action: { type: 'insert', data: 2 } },
@@ -65,7 +65,7 @@ export default defineComponent({
     'n7 n8 n9 min'
     'n4 n5 n6 plus'
     'n1 n2 n3 eq'
-    'pm n0 dot eq';
+    'z3 n0 dot eq';
   gap: 8px;
   padding: 12px;
   padding-top: 0;
