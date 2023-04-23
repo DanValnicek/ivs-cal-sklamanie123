@@ -37,7 +37,7 @@ function convertFunctionExpressionsToString(inputExpression: string[]): string[]
         inputExpression.splice(functionExpressionIndex, 1, "$");
         for (let nestedParentheses = 0; inputExpression[functionExpressionIndex + 1] != ")" || nestedParentheses != 0;) {
             if (inputExpression[functionExpressionIndex + 1] == "(") nestedParentheses++;
-            if (inputExpression[functionExpressionIndex + 1] == ")") nestedParentheses++;
+            if (inputExpression[functionExpressionIndex + 1] == ")") nestedParentheses--;
 
             inputExpression.splice(functionExpressionIndex, 2, inputExpression.slice(functionExpressionIndex, functionExpressionIndex + 2).join(" "));
         }
@@ -97,7 +97,7 @@ export function convertRPN(expression: string): Array<number | string> {
             //remove "("
             operatorStack.pop();
         } else {
-            throw Error("Parse error: Unexpected token");
+            throw Error("Parse exception: Invalid number of arguments");
         }
     }
     if (operatorStack.find(element => element === "(" || element === ")")) throw Error("Mismatched parentheses");
