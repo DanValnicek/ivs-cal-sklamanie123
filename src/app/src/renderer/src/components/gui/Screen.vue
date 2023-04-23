@@ -1,7 +1,7 @@
 <template>
   <div>
-    <PromptVue v-model:promptValue="pPromptValue" v-model:cursorInfo="pCursorInfo" />
-    <ResultVue />
+    <PromptVue v-model:promptValue="pPromptValue" v-model:cursorInfo="pCursorInfo" :error="promptError" />
+    <ResultVue :value="promptEvaluation" :error="promptError" />
   </div>
 </template>
 
@@ -19,6 +19,12 @@ export default defineComponent({
   props: {
     promptValue: {
       type: String
+    },
+    promptEvaluation: {
+      type: Number
+    },
+    promptError: {
+      type: Boolean
     },
     cursorInfo: {
       type: Object
