@@ -33,7 +33,6 @@ function convertFunctionExpressionsToString(inputExpression: string[]): string[]
     let indexOfFunction = inputExpression.findIndex(value => functionTable[value]);
 
     while (indexOfFunction != -1) {
-
         let functionExpressionIndex = inputExpression.slice(indexOfFunction).findIndex(value => value == "(") + indexOfFunction;
         inputExpression.splice(functionExpressionIndex, 1, "$");
         for (let nestedParentheses = 0; inputExpression[functionExpressionIndex + 1] != ")" || nestedParentheses != 0;) {
@@ -48,6 +47,7 @@ function convertFunctionExpressionsToString(inputExpression: string[]): string[]
     }
     return inputExpression;
 }
+
 
 // shunting yard algorithm https://en.wikipedia.org/wiki/Shunting_yard_algorithm
 export function convertRPN(expression: string): Array<number | string> {
@@ -68,7 +68,7 @@ export function convertRPN(expression: string): Array<number | string> {
         else if (functionTable[currentToken])
             operatorStack.push(currentToken);
         else if (currentToken.startsWith("$"))
-            output.push(currentToken.replace("$ ",""));
+            output.push(currentToken.replace("$ ", ""));
         else if (operatorTable[currentToken]) {
             while (
                 // @ts-ignore
