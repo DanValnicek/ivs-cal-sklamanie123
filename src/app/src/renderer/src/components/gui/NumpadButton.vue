@@ -1,7 +1,8 @@
 <template>
   <button @mousedown="emitAction" class="button" :class="{
     'l-2': color == 'l-2',
-    'l-accent': color == 'l-accent'
+    'l-accent': color == 'l-accent',
+    'disabled': isDisabled
   }" :style="{ 'grid-area': area }">
     <div class="inner">
       <span v-if="icon" class="button-text">
@@ -31,6 +32,9 @@ export default defineComponent({
     area: {
       type: String,
       required: true
+    },
+    isDisabled: {
+      type: Boolean
     },
     action: {
       type: Object
@@ -84,7 +88,7 @@ export default defineComponent({
     transition: bottom 0.1s ease-out;
   }
 
-  &:hover {
+  &:hover:not(.disabled) {
     filter: brightness(125%);
 
     &::before {
@@ -105,6 +109,11 @@ export default defineComponent({
     .inner {
       transform: translateY(1px);
     }
+  }
+
+  &.disabled {
+    filter: brightness(0.5);
+    pointer-events: none;
   }
 
   .button-text {

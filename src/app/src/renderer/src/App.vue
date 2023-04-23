@@ -4,7 +4,7 @@
       <titlebar />
       <div class="content">
         <ScreenVue v-model:promptValue="promptValue" v-model:cursorInfo="cursorInfo" :promptEvaluation="promptEvaluation" :promptError="promptError" />
-        <NumpadVue @action="handleNumpadAction" />
+        <NumpadVue @action="handleNumpadAction" :promptError="promptError" />
       </div>
     </div>
   </div>
