@@ -90,6 +90,16 @@ export default defineComponent({
       this.cursorInfo.selectionContent = this.promptValue.substring(this.cursorInfo.selectionStart, this.cursorInfo.selectionEnd);
     },
     handleNumpadAction(action: ButtonAction) {
+      if (action.type === 'evaluate') {
+        this.promptValue = this.promptEvaluation.toString();
+        this.cursorInfo = {
+          selectionStart: this.promptValue.length,
+          selectionEnd: this.promptValue.length,
+          selectionContent: ''
+        };
+        return;
+      }
+
       const transformationFn = TransformationHelper[action.type];
 
       if (!transformationFn) {
