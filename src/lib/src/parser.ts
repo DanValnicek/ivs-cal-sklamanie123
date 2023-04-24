@@ -1,8 +1,8 @@
-import {absolute, add, divide, multiply, subtract} from './operations/basicArithmetic';
-import {powerOfN} from './operations/powerOfN';
-import {sum} from './operations/sum';
-import {nThRoot} from './operations/nthroot';
-import {factorial} from "./operations/factorial";
+import { absolute, add, divide, multiply, subtract } from './operations/basicArithmetic';
+import { powerOfN } from './operations/powerOfN';
+import { sum } from './operations/sum';
+import { nThRoot } from './operations/nthroot';
+import { factorial } from "./operations/factorial";
 
 /**
  * Operator interface
@@ -20,17 +20,17 @@ interface Operator {
  * @typedef { op name: string { precedence: number, associativity: 'left'|'right', Function } }
  */
 const operatorTable: Record<string, Operator> = {
-    '+': {precedence: 2, associativity: 'left', func: add},
-    '-': {precedence: 2, associativity: 'left', func: subtract},
-    '−': {precedence: 2, associativity: 'left', func: subtract},
-    '*': {precedence: 3, associativity: 'left', func: multiply},
-    '×': {precedence: 3, associativity: 'left', func: multiply},
-    '/': {precedence: 3, associativity: 'left', func: divide},
-    '÷': {precedence: 3, associativity: 'left', func: divide},
-    '^': {precedence: 4, associativity: 'right', func: powerOfN},
-    "root": {precedence: 4, associativity: 'right', func: nThRoot},
-    "fact": {precedence: 4, associativity: 'right', func: factorial},
-    "abs": {precedence: 4, associativity: 'right', func: absolute},
+    '+': { precedence: 2, associativity: 'left', func: add },
+    '-': { precedence: 2, associativity: 'left', func: subtract },
+    '−': { precedence: 2, associativity: 'left', func: subtract },
+    '*': { precedence: 3, associativity: 'left', func: multiply },
+    '×': { precedence: 3, associativity: 'left', func: multiply },
+    '/': { precedence: 3, associativity: 'left', func: divide },
+    '÷': { precedence: 3, associativity: 'left', func: divide },
+    '^': { precedence: 4, associativity: 'right', func: powerOfN },
+    "root": { precedence: 4, associativity: 'right', func: nThRoot },
+    "fact": { precedence: 4, associativity: 'right', func: factorial },
+    "abs": { precedence: 4, associativity: 'right', func: absolute },
 };
 
 /**
@@ -109,15 +109,15 @@ export function convertRPN(expression: string): Array<number | string> {
             // pushes operations that should be done before current to output
             while (
                 // @ts-ignore
-            functionTable[operatorStack.at(-1)] ||
-            operatorStack.length != 0 &&
-            "(" != operatorStack.at(-1) &&
-            // if current token has lower or equal precedence
-            // @ts-ignore
-            operatorTable[operatorStack.at(-1)].precedence >= operatorTable[currentToken].precedence &&
-            // token is left associative
-            operatorTable[currentToken].associativity == "left"
-                ) {
+                functionTable[operatorStack.at(-1)] ||
+                operatorStack.length != 0 &&
+                "(" != operatorStack.at(-1) &&
+                // if current token has lower or equal precedence
+                // @ts-ignore
+                operatorTable[operatorStack.at(-1)].precedence >= operatorTable[currentToken].precedence &&
+                // token is left associative
+                operatorTable[currentToken].associativity == "left"
+            ) {
                 // @ts-ignore
                 output.push(operatorStack.pop());
             }//end while
@@ -178,6 +178,13 @@ export function parseExpression(expression: string): number | undefined {
     return termList[0];
 }
 
+/**
+ * @description Converts user typed or inputted string from FE GUI calculator to valid "convertRPN" readable format
+ * @param input Input string from FE GUI calculator
+ * @returns String in valid "convertRPN" readable format
+ * @example "4!-|-123|+root 13 (    169 )+2*|12|+|-123|"
+ *       => "fact ( 4 ) - abs ( -123 ) + root 13 ( 169 ) + 2 * abs ( 12 ) + abs ( -123 )"
+ */
 export function sanitizeInput(input: string): string {
     let regex;
 
@@ -190,7 +197,6 @@ export function sanitizeInput(input: string): string {
     // remove all spaces
     input = input.replace(/\s/g, '');
 
-
     // replace all occurrences of "|x|" with "abs ( x )"
     regex = /\|(.?\d+(\.\d+)?|\w+)\|/g;
     input = input.replace(regex, "abs ( $1 )");
@@ -199,11 +205,9 @@ export function sanitizeInput(input: string): string {
     regex = /abs\((.+?)\)/g;
     input = input.replace(regex, "abs ( $1 )");
 
-
     // replace all occurrences of "rootY(X)" with "root Y ( X )"
     regex = /root(\d+)\((.+?)\)/g;
     input = input.replace(regex, "root $1 ( $2 )");
-
 
     // replace all occurrences of "x!" with "fact ( x )"
     regex = /(-?\d+(\.\d+)?|\w+)!/g;
@@ -212,7 +216,6 @@ export function sanitizeInput(input: string): string {
     // replace all occurrences of "fact(x)" with "fact ( x )"
     regex = /fact\((.+?)\)/g;
     input = input.replace(regex, "fact ( $1 )");
-
 
     // add space before and after every + * / ^
     regex = /(\+|\*|\/|\^)/g;
@@ -233,7 +236,6 @@ export function sanitizeInput(input: string): string {
     // add space before and after "-" when there is a number before it
     regex = /(\d)(-)/g;
     input = input.replace(regex, "$1 $2 ");
-
 
     // remove any excess spaces
     regex = /\s\s/g;
