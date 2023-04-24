@@ -15,6 +15,20 @@
 </template>
 
 <script lang="ts">
+/**
+ * @file Numpad.vue
+ * @brief Generates the custom numpad buttons from the buttonData array
+ * @author Jakub Vodrážka, Martin Brázda
+ * 
+ * @params promptError: Boolean - The state of the expression (invalid or valid).
+ * 
+ * @props icon: String - The name of the icon.
+ * @props value: String - The value of the button.
+ * @props color: String - The color of the button.
+ * @props area: String - The grid area of the button.
+ * @props isDisabled: Boolean - The state of the button (disabled or enabled).
+ * @props action: Object - The action of the button.
+ */
 import { defineComponent } from 'vue'
 import NumpadButtonVue from './NumpadButton.vue';
 export default defineComponent({
