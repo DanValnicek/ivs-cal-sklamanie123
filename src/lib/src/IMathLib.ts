@@ -4,6 +4,10 @@
  * @author Dan Valníček
  */
 
+/**
+ * interface for math library functions
+ * @interface IMathLib
+ */
 interface IMathLib {
     add(x: number, y: number): number;
 
