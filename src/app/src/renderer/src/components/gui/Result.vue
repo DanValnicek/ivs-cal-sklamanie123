@@ -12,8 +12,8 @@
  * @brief This component displays the result of the given expression.
  * @author Jakub Vodrážka, Martin Brázda
  * 
- * @params value: Number - The evaluation of the prompt (result).
- * @params error: Boolean - State of the expression (invalid or valid).
+ * @props value: Number - The evaluation of the prompt (result).
+ * @props error: Boolean - State of the expression (invalid or valid).
  */
 import { defineComponent } from 'vue';
 
