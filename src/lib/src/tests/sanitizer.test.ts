@@ -34,13 +34,13 @@ describe('test sanitizeInput function', () => {
     });
     it("4!-|-123|+root 13 (    169 )+2*|12|+|-123| => 4! - abs ( -123 ) + root 13 ( 169 ) + 2 * abs ( 12 ) + abs ( -123 )", () => {
         expect(sanitizeInput("4!-|-123|+root 13 (    169 )+2*|12|+|-123|")).toEqual(
-            "4! - abs ( -123 ) + root 13 ( 169 ) + 2 * abs ( 12 ) + abs ( -123 )");
+            "fact ( 4 ) - abs ( -123 ) + root 13 ( 169 ) + 2 * abs ( 12 ) + abs ( -123 )");
     });
     it("-5-5-5-5-5 => -5 - 5 - 5 - 5 - 5", () => {
         expect(sanitizeInput("-5-5-5-5-5")).toEqual("-5 - 5 - 5 - 5 - 5");
     });
     it("4!   -|-123    |^   root 13(169)   +2*    |12  |  +|  -123| => 4! - abs ( -123 ) ^ root 13 ( 169 ) + 2 * abs ( 12 ) + abs ( -123 )", () => {
         expect(sanitizeInput("4!   -|-123    |^   root 13(169)   +2*    |12  |  +|  -123|")).toEqual(
-            "4! - abs ( -123 ) ^ root 13 ( 169 ) + 2 * abs ( 12 ) + abs ( -123 )");
+            "fact ( 4 ) - abs ( -123 ) ^ root 13 ( 169 ) + 2 * abs ( 12 ) + abs ( -123 )");
     });
 })

@@ -3,8 +3,8 @@
     <div class="inner">
       <titlebar />
       <div class="content">
-        <ScreenVue v-model:promptValue="promptValue" v-model:cursorInfo="cursorInfo" />
-        <NumpadVue @user-input="handleUserInput" />
+        <ScreenVue v-model:promptValue="promptValue" v-model:cursorInfo="cursorInfo" :promptEvaluation="promptEvaluation" :promptError="promptError" />
+        <NumpadVue @action="handleNumpadAction" :promptError="promptError" />
       </div>
     </div>
   </div>
@@ -19,6 +19,10 @@ import Titlebar from './components/shell/Titlebar.vue';
 import ScreenVue from './components/gui/Screen.vue';
 import NumpadVue from './components/gui/Numpad.vue';
 
+import TransformationHelper from './helpers/TransformationHelper';
+
+import MathLib from './lib/math-lib/dist';
+
 export default defineComponent({
   name: 'App',
   components: {
@@ -29,6 +33,8 @@ export default defineComponent({
   data() {
     return {
       promptValue: '',
+      promptEvaluation: 0,
+      promptError: false,
 
       cursorInfo: {
         selectionStart: 0,
@@ -36,6 +42,11 @@ export default defineComponent({
         selectionContent: ''
       }
     };
+  },
+  watch: {
+    promptValue() {
+      this.calculateExpression();
+    }
   },
   created() {
     const theme = themeFromSourceColor(argbFromHex('#a09bff'), []);
@@ -78,25 +89,48 @@ export default defineComponent({
       this.cursorInfo.selectionEnd = cursorInfo.selectionEnd;
       this.cursorInfo.selectionContent = this.promptValue.substring(this.cursorInfo.selectionStart, this.cursorInfo.selectionEnd);
     },
-    handleUserInput(userInput: string) {
-      if (userInput === 'clr') this.promptValue = '';
+    handleNumpadAction(action: ButtonAction) {
+      if (action.type === 'evaluate') {
+        this.promptValue = this.promptEvaluation.toString();
+        this.cursorInfo = {
+          selectionStart: this.promptValue.length,
+          selectionEnd: this.promptValue.length,
+          selectionContent: ''
+        };
+        return;
+      }
 
-      if (userInput === 'bs') {
-        if (this.cursorInfo.selectionStart === 0) {
-          return;
-        }
-        const strBeforeCursor = this.promptValue.substring(0, this.cursorInfo.selectionStart - 1);
-        const strAfterCursor = this.promptValue.substring(this.cursorInfo.selectionStart);
-        this.promptValue = strBeforeCursor + strAfterCursor;
-        this.cursorInfo.selectionStart--;
-        this.cursorInfo.selectionEnd--;
+      const transformationFn = TransformationHelper[action.type];
+
+      if (!transformationFn) {
+        console.warn(`Action type '${action.type}' does not exist in transformation functions`);
+        return;
+      }
+
+      const fnRes = transformationFn(action, this.cursorInfo, this.promptValue);
+
+      if (fnRes) {
+        this.cursorInfo = fnRes.cursorInfo;
+        this.promptValue = fnRes.promptValue;
       }
     },
     updatePromptValue(newPromptValue: string) {
       this.promptValue = newPromptValue;
     },
     calculateExpression() {
-      console.log(this.promptValue);
+      try {
+        const evaluation = MathLib.parseExpression(this.promptValue);
+        if (evaluation === undefined) {
+          this.promptError = true;
+          return;
+        }
+
+        this.promptEvaluation = evaluation;
+        this.promptError = false;
+      } catch (e) {
+        console.log(e);
+        this.promptError = true;
+      }
     }
   }
 });
