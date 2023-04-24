@@ -6,5 +6,8 @@
   },
   "scripts": {
     "test": "jest ./src/tests"
+  },
+  "dependencies": {
+    "@types/node": "^18.15.13"
   }
 }

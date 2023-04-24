@@ -82,8 +82,6 @@ function convertFunctionExpressionsToString(inputExpression: string[]): string[]
  *       => [0, 5, "6 + 3 * sum 0 4 ( 3 - 4 + n ) / n", "sum"]
  */
 export function convertRPN(expression: string): Array<number | string> {
-    //input sanitization so it can be split by space
-    expression = sanitizeInput(expression);
 
     //expression shouldn't contain the "$" character that is used to mark sub expressions of nested functions
     if (expression.includes("$")) throw Error("Invalid character $");
@@ -148,11 +146,14 @@ export function convertRPN(expression: string): Array<number | string> {
 /**
  * Parses expression and evaluates numerical value of given expression
  * @param expression expression in infix notation
+ * @param sanitize turns sanitization on and off default is on
  * @returns numerical value of expression
  * @example "2 + 2" => 4
  * @example "fact ( 5 ) - root 3 ( 8 ) + abs(-6)^2" => 154
  */
-export function parseExpression(expression: string): number | undefined {
+export function parseExpression(expression: string, sanitize: boolean = true): number | undefined {
+    //input sanitization so it can be split by space
+    if (sanitize) expression = sanitizeInput(expression);
     let termList = convertRPN(expression);
     while (termList.length != 1 || typeof termList[0] != "number") {
         //find operation of function
