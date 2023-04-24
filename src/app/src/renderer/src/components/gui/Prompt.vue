@@ -21,9 +21,9 @@
  * @brief This component is the prompt of the calculator. It contains the expression.
  * @author Jakub Vodrážka, Martin Brázda
  * 
- * @params promptValue: String - The value of the prompt (expression).
- * @params error: Boolean - State of the expression (invalid or valid).
- * @params cursorInfo: Object - The cursor info bundled.
+ * @props promptValue: String - The value of the prompt (expression).
+ * @props error: Boolean - State of the expression (invalid or valid).
+ * @props cursorInfo: Object - The cursor info bundled.
  * 
  * @emits update:cursorInfo - The cursor info bundled.
  * @emits update:promptValue - The value of the prompt (expression).
