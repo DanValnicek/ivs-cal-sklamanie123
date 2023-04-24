@@ -3,8 +3,8 @@
     <div class="inner">
       <titlebar />
       <div class="content">
-        <ScreenVue v-model:promptValue="promptValue" v-model:cursorInfo="cursorInfo" />
-        <NumpadVue @action="handleNumpadAction" />
+        <ScreenVue v-model:promptValue="promptValue" v-model:cursorInfo="cursorInfo" :promptEvaluation="promptEvaluation" :promptError="promptError" />
+        <NumpadVue @action="handleNumpadAction" :promptError="promptError" />
       </div>
     </div>
   </div>
@@ -21,6 +21,8 @@ import NumpadVue from './components/gui/Numpad.vue';
 
 import TransformationHelper from './helpers/TransformationHelper';
 
+import MathLib from './lib/math-lib/dist';
+
 export default defineComponent({
   name: 'App',
   components: {
@@ -31,6 +33,8 @@ export default defineComponent({
   data() {
     return {
       promptValue: '',
+      promptEvaluation: 0,
+      promptError: false,
 
       cursorInfo: {
         selectionStart: 0,
@@ -38,6 +42,11 @@ export default defineComponent({
         selectionContent: ''
       }
     };
+  },
+  watch: {
+    promptValue() {
+      this.calculateExpression();
+    }
   },
   created() {
     const theme = themeFromSourceColor(argbFromHex('#a09bff'), []);
@@ -81,6 +90,16 @@ export default defineComponent({
       this.cursorInfo.selectionContent = this.promptValue.substring(this.cursorInfo.selectionStart, this.cursorInfo.selectionEnd);
     },
     handleNumpadAction(action: ButtonAction) {
+      if (action.type === 'evaluate') {
+        this.promptValue = this.promptEvaluation.toString();
+        this.cursorInfo = {
+          selectionStart: this.promptValue.length,
+          selectionEnd: this.promptValue.length,
+          selectionContent: ''
+        };
+        return;
+      }
+
       const transformationFn = TransformationHelper[action.type];
 
       if (!transformationFn) {
@@ -99,7 +118,19 @@ export default defineComponent({
       this.promptValue = newPromptValue;
     },
     calculateExpression() {
-      console.log(this.promptValue);
+      try {
+        const evaluation = MathLib.parseExpression(this.promptValue);
+        if (evaluation === undefined) {
+          this.promptError = true;
+          return;
+        }
+
+        this.promptEvaluation = evaluation;
+        this.promptError = false;
+      } catch (e) {
+        console.log(e);
+        this.promptError = true;
+      }
     }
   }
 });

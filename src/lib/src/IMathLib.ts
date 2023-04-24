@@ -1,4 +1,4 @@
-export interface IMathLib {
+interface IMathLib {
     add(x: number, y: number): number;
 
     subtract(x: number, y: number): number;
@@ -22,7 +22,7 @@ export interface IMathLib {
      * @param n upper bound of summation
      * @param term to be summed
      */
-    sum(m: number, n: number, term: string): number;
+    sum(m: number, n: number, term: string): number | undefined;
 
     parseExpression(expression: string): number | undefined;
 }
