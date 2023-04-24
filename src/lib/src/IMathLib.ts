@@ -1,3 +1,9 @@
+/**
+ * @file IMathLib.ts
+ * @brief interface for math library functions
+ * @author Dan Valníček
+ */
+
 interface IMathLib {
     add(x: number, y: number): number;
 
