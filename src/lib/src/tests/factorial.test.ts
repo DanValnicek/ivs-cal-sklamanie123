@@ -1,5 +1,15 @@
+/**
+ * @file factorial.test.ts
+ * @brief tests for factorial function
+ * @see ivs-cal-sklamanie123/src/lib/src/operations/factorial.ts
+ * @author Jakub Vodrážka
+ */
+
 import {factorial} from '../operations/factorial';
 
+/**
+ * @test {factorial}
+ */
 describe('test factorial function', () => {
     it('should return 120 for factorial(5)', () => {
         expect(factorial(5)).toBe(120);

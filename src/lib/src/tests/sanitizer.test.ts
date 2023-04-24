@@ -1,5 +1,15 @@
+/**
+ * @file sanitizer.test.ts
+ * @brief tests for sanitizer function
+ * @see ivs-cal-sklamanie123/src/lib/src/parser.ts
+ * @author Jakub Vodrážka
+ */
+
 import { sanitizeInput } from '../parser'
 
+/**
+ * @test {sanitizeInput}
+ */
 describe('test sanitizeInput function', () => {
     it("2 + 3 => 2 + 3", () => {
         expect(sanitizeInput("2 + 3")).toEqual('2 + 3');
