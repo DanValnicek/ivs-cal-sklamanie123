@@ -16,6 +16,18 @@
 </template>
 
 <script lang="ts">
+/**
+ * @file Prompt.vue
+ * @brief This component is the prompt of the calculator. It contains the expression.
+ * @author Jakub Vodrážka, Martin Brázda
+ * 
+ * @params promptValue: String - The value of the prompt (expression).
+ * @params error: Boolean - State of the expression (invalid or valid).
+ * @params cursorInfo: Object - The cursor info bundled.
+ * 
+ * @emits update:cursorInfo - The cursor info bundled.
+ * @emits update:promptValue - The value of the prompt (expression).
+ */
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -62,11 +74,17 @@ export default defineComponent({
       // I know this is a hacky way to do this, but there is literally no other way, except watching selection every ms soooo...
       setTimeout(this.handleCursorInfo, 1);
     },
+    /**
+     * @brief Emits the new prompt value when it is changed by the user.
+     */
     handleInput() {
       const prompt = this.$refs.prompt as HTMLTextAreaElement;
       const newPromptValue = prompt.value;
       this.$emit('update:promptValue', newPromptValue);
     },
+    /**
+     * @brief Focuses the prompt and sets the cursor position when user focuses the app.
+     */
     focusPrompt() {
       const prompt = this.$refs.prompt as HTMLTextAreaElement;
       this.$nextTick(() => {
@@ -74,6 +92,9 @@ export default defineComponent({
         prompt.setSelectionRange(this.currentCursorPosition, this.currentCursorPosition);
       });
     },
+    /**
+     * @brief Gets the current cursor info in prompt and emits it.
+     */
     getCursorInfo() {
       this.$nextTick(() => {
         const prompt = this.$refs.prompt as HTMLTextAreaElement;
