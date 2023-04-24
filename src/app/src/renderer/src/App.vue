@@ -22,10 +22,13 @@
  * @brief This component is the main component of the application.
  * @author Jakub Vodrážka, Martin Brázda
  * 
- * @params promptValue: String - The value of the prompt (expression).
- * @params cursorInfo: Object - The cursor info bundled.
- * @props promptEvaluation: Number - The evaluation of the prompt (result).
- * @props promptError: Boolean - State of the expression (invalid or valid).
+ * @model promptValue: String - The value of the prompt.
+ * @model cursorInfo: Object - The cursor info object.
+ * 
+ * @passes promptEvaluation: Number - The result of the prompt evaluation.
+ * @passes promptError: Boolean - The state of the prompt (error or not).
+ * 
+ * @event action - The action of the numpad button.
  */
 import { defineComponent } from 'vue';
 

@@ -30,6 +30,8 @@
  * @passes area: String - The grid area of the button.
  * @passes action: Object - The action of the button.
  * @passes isDisabled: Boolean - The state of the button (disabled or enabled).
+ * 
+ * @event action - The action of the button.
  */
 import { defineComponent } from 'vue'
 import NumpadButtonVue from './NumpadButton.vue';
