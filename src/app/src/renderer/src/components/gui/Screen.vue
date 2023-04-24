@@ -19,9 +19,9 @@
  * @author Jakub Vodrážka, Martin Brázda
  * 
  * @params promptValue: String - The value of the prompt (expression).
- * @params promptEvaluation: Number - The evaluation of the prompt (result).
- * @params promptError: Boolean - State of the expression (invalid or valid).
  * @params cursorInfo: Object - The cursor info bundled.
+ * @props promptEvaluation: Number - The evaluation of the prompt (result).
+ * @props promptError: Boolean - State of the expression (invalid or valid).
  * 
  * @emits update:cursorInfo - The cursor info bundled.
  * @emits update:promptValue - The value of the prompt (expression).

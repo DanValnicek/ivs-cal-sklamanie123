@@ -3,14 +3,30 @@
     <div class="inner">
       <titlebar />
       <div class="content">
-        <ScreenVue v-model:promptValue="promptValue" v-model:cursorInfo="cursorInfo" :promptEvaluation="promptEvaluation" :promptError="promptError" />
-        <NumpadVue @action="handleNumpadAction" :promptError="promptError" />
+        <ScreenVue 
+          v-model:promptValue="promptValue" 
+          v-model:cursorInfo="cursorInfo" 
+          :promptEvaluation="promptEvaluation" 
+          :promptError="promptError" />
+        <NumpadVue 
+          @action="handleNumpadAction" 
+          :promptError="promptError" />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+/**
+ * @file App.vue
+ * @brief This component is the main component of the application.
+ * @author Jakub Vodrážka, Martin Brázda
+ * 
+ * @params promptValue: String - The value of the prompt (expression).
+ * @params cursorInfo: Object - The cursor info bundled.
+ * @props promptEvaluation: Number - The evaluation of the prompt (result).
+ * @props promptError: Boolean - State of the expression (invalid or valid).
+ */
 import { defineComponent } from 'vue';
 
 import { argbFromHex, hexFromArgb, themeFromSourceColor } from '@material/material-color-utilities';
@@ -84,11 +100,21 @@ export default defineComponent({
     }
   },
   methods: {
+    
+    /**
+     * @brief Sets the new cursor position and details.
+     * @param cursorInfo: Object - The cursorInfo object from screen.
+     */
     handleCursorInfo(cursorInfo: { selectionStart: number; selectionEnd: number; selectionContent: '' }) {
       this.cursorInfo.selectionStart = cursorInfo.selectionStart;
       this.cursorInfo.selectionEnd = cursorInfo.selectionEnd;
       this.cursorInfo.selectionContent = this.promptValue.substring(this.cursorInfo.selectionStart, this.cursorInfo.selectionEnd);
     },
+
+    /**
+     * @brief Handles the numpad action.
+     * @param action: Object - The action object from numpad.
+     */
     handleNumpadAction(action: ButtonAction) {
       if (action.type === 'evaluate') {
         this.promptValue = this.promptEvaluation.toString();
@@ -117,6 +143,10 @@ export default defineComponent({
     updatePromptValue(newPromptValue: string) {
       this.promptValue = newPromptValue;
     },
+
+    /**
+     * @brief Calculates the expression that was inputted by the user.
+     */
     calculateExpression() {
       try {
         const evaluation = MathLib.parseExpression(this.promptValue);
