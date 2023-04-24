@@ -1,9 +1,9 @@
 <template>
-  <button @mousedown="emitAction" class="button" :class="{
-    'l-2': color == 'l-2',
-    'l-accent': color == 'l-accent',
-    'disabled': isDisabled
-  }" :style="{ 'grid-area': area }">
+  <button :title="hint" @mousedown="emitAction" class="button" :class="{
+      'l-2': color == 'l-2',
+      'l-accent': color == 'l-accent',
+      'disabled': isDisabled
+    }" :style="{ 'grid-area': area }">
     <div class="inner">
       <span v-if="icon" class="button-text">
         <img :src="imageSrc" />
@@ -38,6 +38,9 @@ export default defineComponent({
     },
     action: {
       type: Object
+    },
+    hint:{
+      type: String
     }
   },
   emits: ['action'],
@@ -106,6 +109,7 @@ export default defineComponent({
     &::before {
       bottom: 1px;
     }
+
     .inner {
       transform: translateY(1px);
     }
