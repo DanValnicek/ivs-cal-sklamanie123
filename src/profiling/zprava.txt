@@ -1,0 +1,17 @@
+Profiling byl proveden 2 krát s 1000 a 100 000 vzorků dat.
+
+Na našem zařízení trvá rozběh node.js asi 60 milisekund v obou případech.
+Samotný výpočet směrodajné odchylky pro 1000 čísel trvá asi 15 milisekund.
+Pro 100 000 čísel trvá výpočet asi 14 sekund.
+
+Při běhu s 1000 vzorků byla nejvýraznejší funkce pro výpočet mocniny s čase asi 3 milisekundy
+Při běhu se 100 000 vzorky byl čas pro uspořádání čísel do postfix notace podobný jako čas potřebný na výpočet asi 7 sekund.
+
+Myslíme si že největším spomalením je čas přístupu do paměti, který nejsme schopni efektivně ovlivnit protože to je ovládané node.js.
+Pokus o optimalizace funkcí parseExpression a convertToRPN by mohl mít smysl pokuď by jsme snížili množství přístupů na disk.
+
+Závěr
+    - Výkon je pro kalkulačku běžných výrazů víc než dostačující (rychlejší než lidská schopnost vnímat).
+    - Některé postupy výpočtu by se dali přeuspořádat aby se snížil počet přístupů na disk, nevýhodou tohoto přístupu by bylo snížení čitelnosti.
+    - Pro výpočty s velkým množstvím dat by bylo pravděpodobne nejlepší přejít k technologii která je blíž k procesoru (C, C++ ...)
+    která umožňuje lepší kontrolu nad výběrem datových struktur a optimalizacemi překladu.
