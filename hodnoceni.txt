@@ -1,0 +1,4 @@
+xvalni00 100 (testy, matematicka kniznica, profiling, Makefile)
+xbrazd26 130 (frontend, wrapper, instalatory, odinstalatory, Makefile, ikony)
+xkaton00 85 (testy, matematicka kniznica, navrh, mockup, prezentacia, programova dokumentacia, plan)
+xvodra01 85 (testy, matematicka kniznica, frontend, uzivatelska a programova dokumentacia)

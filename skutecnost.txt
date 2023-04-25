@@ -1,0 +1,39 @@
+Plán projektu
+1. Vytvoření repozitáře a spřístupnění vyučujícim - 15.3. - splnili sme
+2. Produkt - 25.4. - splnili sme
+  - mockup programu (Lukáš Katona, Martin Brázda) - 25.3. - splnili sme
+  
+  - testy (Dan Valníček, Jakub Vodrážka) - 25.3. - splnili sme
+    - základní aritmetické operace (Dan Valníček)
+    - faktoriál (Jakub Vodrážka)
+    - umocnění (Dan Valníček)
+    - odmocnění (Jakub Vodrážka)
+    - vybraná funkce Suma (Dan Valníček)
+    
+  - matematická knihovna (Dan Valníček, Lukáš Katona) - 9.4. - splnili sme
+    - základní aritmetické operace (Lukáš Katona)
+    - faktoriál (Dan Valníček)
+    - umocnění (Lukáš Katona)
+    - odmocnění (Dan Valníček)
+    - vybraná funkce Suma (Lukáš Katona)
+  
+  - program - 16.4. - predlzilo sa do 23.4.
+    - back-end
+      - electron (Martin Brázda)
+    - front-end (Jakub Vodrážka, Martin Brázda)
+      
+  - Makefile (Dan Valníček) - 23.4. - predlzilo sa do 25.4.
+  - instalátor (Martin Brázda) - 23.4. - splnili sme
+  - odinstalátor (Martin Brázda) - 23.4. - splnili sme
+  - dokumentace (Všichni) - 25.4. - splnili sme
+ 
+3. Debugging (Všichni) - splnili sme
+4. Profiling (Dan Valníček) - 23.4. - splnili sme
+5. Mockup další verze (Lukáš Katona) - 23.4. - splnili sme
+6. Vyhodnocení rozdílů medzi plánem a skutečností (Všichni) - 25.4. - splnili sme
+7. Prezentace (Lukáš Katona) - 9.5.
+8. problemy.txt - 9.5.
+
+Kalkulačka navyše obsahuje funkciu absolútnej hodnoty a funkciu na napísanie troch núl.
+
+  

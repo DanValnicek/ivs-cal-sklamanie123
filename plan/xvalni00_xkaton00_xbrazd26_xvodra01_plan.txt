@@ -44,32 +44,4 @@ Plán projektu
 6. Vyhodnocení rozdílů medzi plánem a skutečností (Všichni) - 25.4.
 7. Prezentace (Lukáš Katona) - 9.5.
 8. problemy.txt - 9.5.
-
-TODO:
-  MARTIN
-  debian package
-
-  DAN
-  debugging
-  profiling
-  MakeFile
-
-  LUKAS
-  mockup
-
-  JAKUB A LUKAS
-  dokumentacia
-
-  JAKUB
-  tooltips
-
-  VSETCI v utorok
-  vyhodnotenie
-    skutecnost.txt
-    hodnoceni.txt
-  otestovat na virtualke - utorok
-  skontrolovat strukturu repozitara
-  README.md
-
-
   
