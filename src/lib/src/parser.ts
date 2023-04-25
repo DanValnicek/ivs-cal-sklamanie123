@@ -95,7 +95,7 @@ export function convertRPN(expression: string): Array<number | string> {
     let input: string[] = expression.split(" ");
     input = convertFunctionExpressionsToString(input);
 
-    if (input == undefined) throw Error("Parsing error");
+    if (input == undefined) throw Error("Parse exception");
     let output: Array<number | string> = [];
     //top element is operatorStack.at(-1)
     let operatorStack: string[] = [];
@@ -165,7 +165,7 @@ export function parseExpression(expression: string, sanitize: boolean = true): n
     while (termList.length != 1 || typeof termList[0] != "number") {
         //find operation of function
         let term = termList.find(value => operatorTable[value] || functionTable[value]);
-        if (term == undefined) throw Error("Parse error");
+        if (term == undefined) throw Error("Parse exception");
         let termIndex = termList.indexOf(term);
 
         //find function in tables
