@@ -49,5 +49,5 @@ pack:build-app doc profile
 	mv /tmp/$(TEAMNAME).zip ./$(TEAMNAME).zip
 	rm -fr /tmp/$(TEAMNAME)
 
-clean: lib/dist/ app/src/renderer/src/lib/math-lib/
+clean:
 	rm -fr app/dist lib/dist/ app/src/renderer/src/lib/math-lib/ app/node_modules lib/node_modules profiling/node_modules
