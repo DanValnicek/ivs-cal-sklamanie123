@@ -12,6 +12,10 @@ import { nThRoot } from './operations/nthroot';
 import { sum } from './operations/sum';
 import { parseExpression } from './parser';
 
+/**
+ * exports all functions from the library as one object
+ * @interface IMathLib
+ */
 const MathLib: IMathLib = {
     add,
     subtract,
