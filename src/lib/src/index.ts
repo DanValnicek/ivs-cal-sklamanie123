@@ -1,3 +1,8 @@
+/**
+ * @file index.ts
+ * @brief exports all functions from the library as one object
+ * @author Martin Brázda
+ */
 
 import { add, subtract, multiply, divide, absolute } from './operations/basicArithmetic'
 

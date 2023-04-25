@@ -1,4 +1,17 @@
+/**
+ * @file TransformationHelper.ts
+ * @brief Transformation helper object indexed by the action type.
+ * @author Martin Brázda
+ */
 const TransformationHelper = {
+  /**
+   * @brief Clears the prompt value and moves the cursor to the beginning.
+   * @param _action: ButtonAction
+   * @param cursorInfo: CursorInfo
+   * @param promptValue: String
+   *
+   * @returns { cursorInfo: CursorInfo; promptValue: string }
+    */
   clear: function (_action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined {
     promptValue = '';
     cursorInfo.refocus = true;
@@ -9,6 +22,14 @@ const TransformationHelper = {
     };
   },
 
+  /**
+   * @brief Deletes one character before the cursor.
+   * @param _action: ButtonAction
+   * @param cursorInfo: CursorInfo
+   * @param promptValue: String
+   *
+   * @returns { cursorInfo: CursorInfo; promptValue: string }
+   */
   backspace: function (_action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined {
     if (cursorInfo.selectionStart === cursorInfo.selectionEnd) {
       if (cursorInfo.selectionStart === 0) {
@@ -36,6 +57,14 @@ const TransformationHelper = {
     };
   },
 
+  /**
+   * @brief takes in the action.data and inserts it at the cursor position, then moves cursor after what has been inserted.
+   * @param action: ButtonAction
+   * @param cursorInfo: CursorInfo
+   * @param promptValue: String
+   *
+   * @returns { cursorInfo: CursorInfo; promptValue: string }
+   */
   insert: function (action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined {
     if (action.data === undefined) {
       console.warn('No data to insert!');
@@ -67,12 +96,20 @@ const TransformationHelper = {
   },
 
   /**
-   * action.data contains template string where:
-   *  - `$` signifies the selected expression (empty string will be substituted if nothing is selected)
-   *  - `&` signifies the cursor position after the transformation. This can be overwritten using the
-   *        action.options.moveCursorInsideExpressionIfEmpty, which will move the cursor to $ instead if nothing is selected
+   * @brief takes in action.data and replaces $ with selected text and moves cursor accordingly.
+   * @param action: ButtonAction
+   * @param cursorInfo: CursorInfo
+   * @param promptValue: String
+   *
+   * @returns { cursorInfo: CursorInfo; promptValue: string }
    */
   wrap: function (action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined {
+    /**
+     * action.data contains template string where:
+     *  - `$` signifies the selected expression (empty string will be substituted if nothing is selected)
+     *  - `&` signifies the cursor position after the transformation. This can be overwritten using the
+     *        action.options.moveCursorInsideExpressionIfEmpty, which will move the cursor to $ instead if nothing is selected
+     */
     if (action.data === undefined) {
       console.warn('No wrap syntax!');
       return;

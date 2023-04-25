@@ -1,9 +1,9 @@
 <template>
-  <button @mousedown="emitAction" class="button" :class="{
-    'l-2': color == 'l-2',
-    'l-accent': color == 'l-accent',
-    'disabled': isDisabled
-  }" :style="{ 'grid-area': area }">
+  <button :title="hint" @mousedown="emitAction" class="button" :class="{
+      'l-2': color == 'l-2',
+      'l-accent': color == 'l-accent',
+      'disabled': isDisabled
+    }" :style="{ 'grid-area': area }">
     <div class="inner">
       <span v-if="icon" class="button-text">
         <img :src="imageSrc" />
@@ -14,6 +14,21 @@
 </template>
 
 <script lang="ts">
+/**
+ * @file NumpadButton.vue
+ * @brief This component is a button for the numpad.
+ * @author Jakub Vodrážka, Martin Brázda
+ * 
+ * @props icon: String - The name of the icon.
+ * @props value: String - The value of the button.
+ * @props color: String - The color of the button.
+ * @props area: String - The grid area of the button.
+ * @props isDisabled: Boolean - The state of the button (disabled or enabled).
+ * @props action: Object - The action of the button.
+ * 
+ * @emits action - The action of the button.
+ * 
+ */
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -38,6 +53,9 @@ export default defineComponent({
     },
     action: {
       type: Object
+    },
+    hint:{
+      type: String
     }
   },
   emits: ['action'],
@@ -106,6 +124,7 @@ export default defineComponent({
     &::before {
       bottom: 1px;
     }
+
     .inner {
       transform: translateY(1px);
     }
