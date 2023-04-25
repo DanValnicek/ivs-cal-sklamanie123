@@ -1,5 +1,15 @@
+/**
+* @file powerOfN.test.ts
+* @brief tests for powerOfN function
+* @see ivs-cal-sklamanie123/src/lib/src/operations/powerOfN.ts
+* @author Dan Valníček
+*/
 
 import { powerOfN } from  '../operations/powerOfN'
+
+/**
+ * @test {powerOfN}
+ */
 describe('test powerOfN function', () => {
     it('should return 100000', () => expect(powerOfN(5, 10)).toBe(9765625));
     it('should return 0.00032', () => expect(powerOfN(5, -5)).toBe(0.00032));

@@ -1,5 +1,15 @@
+/**
+ * @file parser.test.ts
+ * @brief tests for parser functions
+ * @see ivs-cal-sklamanie123/src/lib/src/parser.ts
+ * @author Dan Valníček
+ */
+
 import {convertRPN, parseExpression} from '../parser'
 
+/**
+ * @test {parseExpression}
+ */
 describe('test parseRPN function', () => {
     it("sum 0 4 ( 5 + n )  => 0 4 5 n + sum", () => {
         expect(convertRPN("sum 0 4 ( 5 + n )")).toEqual(
@@ -19,6 +29,9 @@ describe('test parseRPN function', () => {
     })
 })
 
+/**
+ * @test {parseExpression}
+ */
 describe('test parse expression function', () => {
     it("2 + 3 => 5", () => {
         expect(parseExpression("2 + 3")).toBe(5);

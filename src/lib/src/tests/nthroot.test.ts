@@ -1,4 +1,15 @@
+/**
+ * @file nthroot.test.ts
+ * @brief tests for nth root function
+ * @see ivs-cal-sklamanie123/src/lib/src/operations/nthroot.ts
+ * @author Jakub Vodrážka
+ */
+
 import { nThRoot } from '../operations/nthroot';
+
+/**
+ * @test {nThRoot}
+ */
 describe('test nth root function', () => {
   it('should return 3', () => {
     expect(nThRoot(2,9 )).toBe(3);

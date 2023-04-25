@@ -1,3 +1,10 @@
+/**
+ * @file parser.ts
+ * @brief parser for mathematical expressions
+ * @description This file contains the parser for mathematical expressions. It is used to parse the expression and calculate the result.
+ * @author Dan Valníček
+ */
+
 import { absolute, add, divide, multiply, subtract } from './operations/basicArithmetic';
 import { powerOfN } from './operations/powerOfN';
 import { sum } from './operations/sum';

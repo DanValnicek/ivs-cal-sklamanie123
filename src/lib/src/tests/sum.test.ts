@@ -1,5 +1,15 @@
+/**
+ * @file sum.test.ts
+ * @brief tests for sum function
+ * @see ivs-cal-sklamanie123/src/lib/src/operations/sum.ts
+ * @author Lukáš Katona
+ */
+
 import { sum } from '../operations/sum'
 
+/**
+ * @test {sum}
+ */
 describe('test sum function', () => {
     it('should return 10', () => expect(sum(0, 4, 'n')).toBe(10));
     it('should return 15', () => expect(sum(0, 4, 'n + 1')).toBe(15));
