@@ -24,6 +24,6 @@ Odovzdávaný repozitár obsahuje:
     mockup(y) další verze kalkulačky,
     informace o provedeném profilingu (v .txt, .pdf či obrázku),
     soubor skutecnost.txt, který bude obsahovat informace o rozdílech mezi plánem projektu a skutečností,
-    soubor hodnoceni.txt (s obsahem viz výše).
-    odevzdani.txt
+    soubor hodnoceni.txt,
+    odevzdani.txt,
     zdrojove subory
