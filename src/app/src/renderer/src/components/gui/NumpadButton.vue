@@ -14,6 +14,21 @@
 </template>
 
 <script lang="ts">
+/**
+ * @file NumpadButton.vue
+ * @brief This component is a button for the numpad.
+ * @author Jakub Vodrážka, Martin Brázda
+ * 
+ * @props icon: String - The name of the icon.
+ * @props value: String - The value of the button.
+ * @props color: String - The color of the button.
+ * @props area: String - The grid area of the button.
+ * @props isDisabled: Boolean - The state of the button (disabled or enabled).
+ * @props action: Object - The action of the button.
+ * 
+ * @emits action - The action of the button.
+ * 
+ */
 import { defineComponent } from 'vue';
 
 export default defineComponent({
