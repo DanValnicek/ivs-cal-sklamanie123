@@ -42,7 +42,7 @@ pack:build-app doc profile
 	mv lib/docs /tmp/$(TEAMNAME)/doc
 	mv app/dist/ivs-calc-app-1.0.0.AppImage /tmp/$(TEAMNAME)/install/ivs-calc-app-1.0.0.AppImage
 	mv app/dist/ivs-calc-app_1.0.0_amd64.deb /tmp/$(TEAMNAME)/install/ivs-calc-app_1.0.0_amd64.deb
-	mv proriling/standardDeviation /tmp/$(TEAMNAME)/install/stddev
+	mv profiling/standardDeviation /tmp/$(TEAMNAME)/install/stddev
 	$(MAKE) clean
 	cp -r .. /tmp/$(TEAMNAME)/repo
 	cd /tmp/ && zip -r $(TEAMNAME).zip ./$(TEAMNAME)
