@@ -15,7 +15,7 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
     const validChannels = [] // Allowed channels main -> renderer
     if (validChannels.includes(channel as never)) {
       // Deliberately strip event as it includes `sender`
-      ipcRenderer.on(channel, (event, ...args) => func(...args));
+      ipcRenderer.on(channel, (_event, ...args) => func(...args));
     }
   }
 });

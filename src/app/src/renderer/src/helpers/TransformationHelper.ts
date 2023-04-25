@@ -1,5 +1,5 @@
 const TransformationHelper = {
-  clear: function (action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined {
+  clear: function (_action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined {
     promptValue = '';
     cursorInfo.refocus = true;
 
@@ -9,7 +9,7 @@ const TransformationHelper = {
     };
   },
 
-  backspace: function (action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined {
+  backspace: function (_action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined {
     if (cursorInfo.selectionStart === cursorInfo.selectionEnd) {
       if (cursorInfo.selectionStart === 0) {
         return;
