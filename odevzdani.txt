@@ -1,0 +1,29 @@
+Termín odovzdania:
+  25. 04. 2023
+  23:59
+  
+Odovzdanie na IVS server:
+  doc/
+    vygenerovaná programová dokumentace
+  install/
+    instalátory
+  repo/
+    repozitář (musí být pracovní kopie i historie, tedy např. i složka .git)
+    
+Odovzdanie do Studisu:
+  hodnoceni.txt
+  zdrojové soubory programu
+  uživatelskou příručku (nebude-li příliš velká),
+  soubor odevzdani.txt
+  
+Odovzdávaný repozitár obsahuje:
+    uživatelskou příručku v PDF,
+    snímek obrazovky programu,
+    testy k matematické knihovně,
+    snímek obrazovky debuggeru či popis postupu debuggingu,
+    mockup(y) další verze kalkulačky,
+    informace o provedeném profilingu (v .txt, .pdf či obrázku),
+    soubor skutecnost.txt, který bude obsahovat informace o rozdílech mezi plánem projektu a skutečností,
+    soubor hodnoceni.txt (s obsahem viz výše).
+    odevzdani.txt
+    zdrojove subory
