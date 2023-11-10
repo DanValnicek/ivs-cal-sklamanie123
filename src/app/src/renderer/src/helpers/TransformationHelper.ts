@@ -6,13 +6,13 @@
 const TransformationHelper = {
   /**
    * @brief Clears the prompt value and moves the cursor to the beginning.
-   * @param action: ButtonAction
+   * @param _action: ButtonAction
    * @param cursorInfo: CursorInfo
    * @param promptValue: String
-   * 
+   *
    * @returns { cursorInfo: CursorInfo; promptValue: string }
     */
-  clear: function (action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined {
+  clear: function (_action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined {
     promptValue = '';
     cursorInfo.refocus = true;
 
@@ -24,13 +24,13 @@ const TransformationHelper = {
 
   /**
    * @brief Deletes one character before the cursor.
-   * @param action: ButtonAction
+   * @param _action: ButtonAction
    * @param cursorInfo: CursorInfo
    * @param promptValue: String
-   * 
+   *
    * @returns { cursorInfo: CursorInfo; promptValue: string }
    */
-  backspace: function (action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined {
+  backspace: function (_action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined {
     if (cursorInfo.selectionStart === cursorInfo.selectionEnd) {
       if (cursorInfo.selectionStart === 0) {
         return;
@@ -62,7 +62,7 @@ const TransformationHelper = {
    * @param action: ButtonAction
    * @param cursorInfo: CursorInfo
    * @param promptValue: String
-   * 
+   *
    * @returns { cursorInfo: CursorInfo; promptValue: string }
    */
   insert: function (action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined {
@@ -100,7 +100,7 @@ const TransformationHelper = {
    * @param action: ButtonAction
    * @param cursorInfo: CursorInfo
    * @param promptValue: String
-   * 
+   *
    * @returns { cursorInfo: CursorInfo; promptValue: string }
    */
   wrap: function (action: ButtonAction, cursorInfo: CursorInfo, promptValue: string): { cursorInfo: CursorInfo; promptValue: string } | undefined {
